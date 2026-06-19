@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kenny Wang — CIRWEL Systems · Runtime governance for AI-agent fleets</title>
+<meta name="description" content="Kenny Wang / CIRWEL Systems — index of work on runtime governance and observability for autonomous AI-agent fleets: papers, open-source systems, datasets, and decks.">
+<meta property="og:title" content="Kenny Wang — CIRWEL Systems">
+<meta property="og:description" content="Runtime governance and observability for autonomous AI-agent fleets. Papers, systems, datasets.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://cirwel.github.io/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink:#070b0f;
+    --ink-2:#0c1218;
+    --panel:#0f171f;
+    --panel-2:#111c25;
+    --line:#1c2832;
+    --line-2:#26343f;
+    --text:#dfe8e6;
+    --muted:#7d8f97;
+    --muted-2:#566570;
+    --phos:#5eead4;
+    --phos-dim:#2f7d72;
+    --amber:#f5a623;
+    --amber-dim:#8a5e1e;
+    --red:#ff6b6b;
+    --serif:'Instrument Serif', Georgia, serif;
+    --sans:'IBM Plex Sans', system-ui, sans-serif;
+    --mono:'IBM Plex Mono', ui-monospace, monospace;
+    --maxw: 1080px;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:var(--sans);
+    background:var(--ink);
+    color:var(--text);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    background-image:
+      radial-gradient(1200px 600px at 80% -10%, rgba(94,234,212,0.06), transparent 60%),
+      radial-gradient(900px 500px at 0% 0%, rgba(245,166,35,0.04), transparent 55%);
+    background-attachment:fixed;
+  }
+  a { color:var(--phos); text-decoration:none; }
+  a:hover { text-decoration:underline; }
+  .wrap { max-width:var(--maxw); margin:0 auto; padding:0 1.5rem; }
+
+  /* top bar */
+  .topbar {
+    position:sticky; top:0; z-index:20;
+    backdrop-filter:blur(10px);
+    background:rgba(7,11,15,0.72);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar-inner { display:flex; align-items:center; justify-content:space-between; height:54px; }
+  .brand { font-family:var(--mono); font-size:0.82rem; letter-spacing:0.14em; color:var(--text); text-transform:uppercase; }
+  .brand .dot { color:var(--phos); }
+  .navlinks { display:flex; gap:1.3rem; font-family:var(--mono); font-size:0.76rem; text-transform:uppercase; letter-spacing:0.08em; }
+  .navlinks a { color:var(--muted); }
+  .navlinks a:hover { color:var(--phos); text-decoration:none; }
+  @media (max-width:640px){ .navlinks { display:none; } }
+
+  /* hero */
+  .hero { padding:5.5rem 0 3rem; border-bottom:1px solid var(--line); }
+  .kicker { font-family:var(--mono); font-size:0.74rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--phos-dim); margin-bottom:1.1rem; }
+  .hero h1 { font-family:var(--serif); font-weight:400; font-size:clamp(2.6rem,6vw,4.2rem); line-height:1.02; letter-spacing:-0.01em; }
+  .hero h1 .accent { color:var(--phos); font-style:italic; }
+  .hero .lede { max-width:660px; margin-top:1.4rem; font-size:1.06rem; color:var(--text); }
+  .hero .sub { max-width:680px; margin-top:0.9rem; color:var(--muted); font-size:0.96rem; }
+  .contact { display:flex; flex-wrap:wrap; gap:0.7rem; margin-top:1.8rem; }
+  .contact a {
+    font-family:var(--mono); font-size:0.78rem; letter-spacing:0.04em;
+    color:var(--text); background:var(--panel); border:1px solid var(--line-2);
+    padding:0.45rem 0.9rem; border-radius:6px; transition:all 0.18s;
+  }
+  .contact a:hover { border-color:var(--phos-dim); color:var(--phos); text-decoration:none; transform:translateY(-1px); }
+
+  /* stats */
+  .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border-bottom:1px solid var(--line); }
+  .stat { background:var(--ink); padding:1.5rem 1rem; text-align:center; }
+  .stat .n { font-family:var(--mono); font-size:1.5rem; font-weight:600; color:var(--phos); }
+  .stat .l { font-family:var(--mono); font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:0.35rem; }
+  @media (max-width:640px){ .stats { grid-template-columns:repeat(2,1fr); } }
+
+  /* sections */
+  section { padding:3.4rem 0; border-bottom:1px solid var(--line); }
+  .sec-head { display:flex; align-items:baseline; gap:0.9rem; margin-bottom:1.8rem; }
+  .sec-head h2 { font-family:var(--mono); font-size:0.86rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--text); font-weight:600; }
+  .sec-head .idx { font-family:var(--mono); font-size:0.78rem; color:var(--phos-dim); }
+  .sec-head .rule { flex:1; height:1px; background:var(--line); }
+  .sec-note { color:var(--muted); font-size:0.9rem; margin-bottom:1.6rem; max-width:680px; }
+
+  /* card grid */
+  .grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1rem; }
+  .grid.one { grid-template-columns:1fr; }
+  @media (max-width:720px){ .grid { grid-template-columns:1fr; } }
+
+  .card {
+    display:flex; flex-direction:column;
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:10px; padding:1.4rem 1.4rem 1.2rem; transition:all 0.18s;
+    position:relative; overflow:hidden;
+  }
+  .card::before { content:""; position:absolute; left:0; top:0; bottom:0; width:2px; background:transparent; transition:background 0.18s; }
+  .card:hover { border-color:var(--line-2); transform:translateY(-2px); }
+  .card:hover::before { background:var(--phos-dim); }
+  .card-top { display:flex; justify-content:space-between; align-items:flex-start; gap:0.8rem; margin-bottom:0.5rem; }
+  .card h3 { font-size:1.08rem; font-weight:600; letter-spacing:-0.01em; }
+  .card .role { font-family:var(--mono); font-size:0.74rem; color:var(--phos); margin-top:0.15rem; }
+  .card p { color:var(--muted); font-size:0.88rem; line-height:1.6; margin-top:0.5rem; flex:1; }
+  .meta { display:flex; flex-wrap:wrap; gap:0.4rem 0.9rem; margin-top:0.9rem; font-family:var(--mono); font-size:0.72rem; color:var(--muted-2); }
+  .meta b { color:var(--muted); font-weight:500; }
+  .links { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1rem; padding-top:0.9rem; border-top:1px solid var(--line); }
+  .links a { font-family:var(--mono); font-size:0.74rem; color:var(--muted); border:1px solid var(--line-2); padding:0.28rem 0.6rem; border-radius:5px; transition:all 0.15s; }
+  .links a:hover { color:var(--phos); border-color:var(--phos-dim); text-decoration:none; }
+  .links a .arrow { color:var(--phos-dim); }
+
+  .badge { font-family:var(--mono); font-size:0.64rem; font-weight:600; letter-spacing:0.06em; text-transform:uppercase; padding:0.2rem 0.55rem; border-radius:50px; white-space:nowrap; }
+  .b-prod { background:rgba(94,234,212,0.12); color:var(--phos); }
+  .b-pub { background:rgba(96,165,250,0.14); color:#7fb3f5; }
+  .b-draft { background:rgba(245,166,35,0.14); color:var(--amber); }
+  .b-deck { background:rgba(94,234,212,0.10); color:var(--phos-dim); border:1px solid var(--phos-dim); }
+  .b-incident { background:rgba(255,107,107,0.12); color:var(--red); }
+
+  /* footer */
+  footer { padding:3rem 0 4rem; }
+  .foot-grid { display:flex; flex-wrap:wrap; justify-content:space-between; gap:1.5rem; align-items:center; }
+  .foot-id { font-family:var(--mono); font-size:0.78rem; color:var(--muted); line-height:1.9; }
+  .foot-id .accent { color:var(--phos); }
+  .foot-links { display:flex; flex-wrap:wrap; gap:1rem; font-family:var(--mono); font-size:0.76rem; }
+  .foot-links a { color:var(--muted); }
+  .foot-links a:hover { color:var(--phos); text-decoration:none; }
+  .colophon { margin-top:2rem; font-family:var(--mono); font-size:0.68rem; color:var(--muted-2); line-height:1.7; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">CIRWEL<span class="dot">·</span>SYSTEMS</div>
+    <nav class="navlinks">
+      <a href="#research">Research</a>
+      <a href="#systems">Systems</a>
+      <a href="#open-source">Open&nbsp;Source</a>
+      <a href="#data">Datasets</a>
+      <a href="#writing">Writing</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="kicker">Independent Researcher · Founder, CIRWEL Systems</div>
+    <h1>Kenny&nbsp;Wang —<br>runtime <span class="accent">governance</span> for<br>AI-agent fleets.</h1>
+    <p class="lede">
+      I build runtime safety infrastructure for autonomous AI agents — the layer that
+      operates <em>after</em> deployment, while agents are actually running.
+    </p>
+    <p class="sub">
+      My framework, <strong>UNITARES</strong>, gives agents continuous awareness of their own
+      operational state — coherence, entropy, calibration, drift — from behavioral telemetry and a
+      dynamical-systems state model. It has run continuously on my own development fleet since
+      November 2025. This page is the index of that work: papers, systems, datasets, and decks.
+    </p>
+    <div class="contact">
+      <a href="https://cirwel.org" target="_blank" rel="noopener">cirwel.org&nbsp;↗</a>
+      <a href="https://github.com/CIRWEL" target="_blank" rel="noopener">GitHub&nbsp;↗</a>
+      <a href="https://huggingface.co/hikewa" target="_blank" rel="noopener">HuggingFace&nbsp;↗</a>
+      <a href="https://orcid.org/0009-0006-7544-2374" target="_blank" rel="noopener">ORCID&nbsp;↗</a>
+      <a href="mailto:founder@cirwel.org">founder@cirwel.org</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><div class="n">Nov&nbsp;2025</div><div class="l">Live deployment</div></div>
+    <div class="stat"><div class="n">21,449</div><div class="l">Published trajectories</div></div>
+    <div class="stat"><div class="n">3</div><div class="l">Papers / preprints</div></div>
+    <div class="stat"><div class="n">Solo</div><div class="l">Operator stress-test</div></div>
+  </div>
+</div>
+
+<main class="wrap">
+
+  <!-- RESEARCH -->
+  <section id="research">
+    <div class="sec-head"><span class="idx">01</span><h2>Research</h2><span class="rule"></span></div>
+    <p class="sec-note">Peer-archivable work. DOIs resolve to the latest archived version on Zenodo. All papers CC&nbsp;BY&nbsp;4.0.</p>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>UNITARES v6</h3><div class="role">Information-Theoretic Governance of Heterogeneous Agent Fleets</div></div>
+          <span class="badge b-pub">Published</span>
+        </div>
+        <p>The framework paper — the state model, the EISV vocabulary mapping, stability-analysis framing, and production measurements from a governed development fleet.</p>
+        <div class="meta"><span><b>DOI</b> 10.5281/zenodo.19647159</span></div>
+        <div class="links">
+          <a href="https://doi.org/10.5281/zenodo.19647159" target="_blank" rel="noopener"><span class="arrow">→</span> Zenodo</a>
+          <a href="https://github.com/CIRWEL/unitares-paper-v6" target="_blank" rel="noopener"><span class="arrow">→</span> Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Trajectory Identity</h3><div class="role">A Mathematical Framework for Enactive AI Self-Hood · Wang 2026b</div></div>
+          <span class="badge b-draft">Preprint v0.14</span>
+        </div>
+        <p>Identity for AI agents framed as a dynamical-systems trajectory signature, with a first multi-agent discrimination pilot (§6.5). Grounded on Lumen — 65 days, 226k observations.</p>
+        <div class="meta"><span><b>DOI</b> 10.5281/zenodo.20098168</span></div>
+        <div class="links">
+          <a href="https://doi.org/10.5281/zenodo.20098168" target="_blank" rel="noopener"><span class="arrow">→</span> Zenodo</a>
+          <a href="https://github.com/CIRWEL/trajectory-identity-paper" target="_blank" rel="noopener"><span class="arrow">→</span> Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Digital Proprioception &amp; Allostatic Load</h3><div class="role">A deployed synthetic-system report · Wang 2026c</div></div>
+          <span class="badge b-draft">Draft v0.3</span>
+        </div>
+        <p>Tests whether the mathematical core of McEwen's allostatic load survives outside its biological substrate — computed end-to-end and acted on at runtime by a deployed agent-observability framework.</p>
+        <div class="meta"><span><b>Status</b> first complete draft</span></div>
+        <div class="links">
+          <a href="https://github.com/CIRWEL/digital-proprioception-paper" target="_blank" rel="noopener"><span class="arrow">→</span> Source</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SYSTEMS / DECKS -->
+  <section id="systems">
+    <div class="sec-head"><span class="idx">02</span><h2>Systems &amp; Decks</h2><span class="rule"></span></div>
+    <p class="sec-note">Live deployments and presentation surfaces.</p>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>UNITARES — Vision Deck</h3><div class="role">Governance for agent fleets</div></div>
+          <span class="badge b-deck">Deck</span>
+        </div>
+        <p>A self-contained pitch deck on why fleets of autonomous agents need a runtime governance plane, and what UNITARES measures.</p>
+        <div class="links">
+          <a href="https://cirwel.github.io/unitares-pitch/" target="_blank" rel="noopener"><span class="arrow">→</span> View deck</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Lumen</h3><div class="role">Embodied AI on a Raspberry Pi — the longitudinal testbed</div></div>
+          <span class="badge b-prod">Production</span>
+        </div>
+        <p>An edge-deployed agent on physical hardware with real sensor fusion. Maintains persistent identity across sessions and supplies the longitudinal telemetry cited in the papers.</p>
+        <div class="meta"><span><b>Pi&nbsp;4</b> hardware</span><span><b>I²C / GPIO</b> sensors</span></div>
+        <div class="links">
+          <a href="https://github.com/CIRWEL/anima-mcp" target="_blank" rel="noopener"><span class="arrow">→</span> anima-mcp</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>cirwel.org</h3><div class="role">CIRWEL Systems — company site</div></div>
+          <span class="badge b-prod">Live</span>
+        </div>
+        <p>The public site for CIRWEL Systems: runtime governance and observability for heterogeneous AI-agent fleets.</p>
+        <div class="links">
+          <a href="https://cirwel.org" target="_blank" rel="noopener"><span class="arrow">→</span> Visit</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Discord Bridge</h3><div class="role">Multi-agent governance dashboard</div></div>
+          <span class="badge b-prod">Live</span>
+        </div>
+        <p>Surfaces governance events, agent presence, and system health across the UNITARES ecosystem as a living Discord server — check-in feeds, EISV state, autonomous actions.</p>
+        <div class="links">
+          <a href="https://github.com/CIRWEL/unitares-discord-bridge" target="_blank" rel="noopener"><span class="arrow">→</span> Source</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- OPEN SOURCE -->
+  <section id="open-source">
+    <div class="sec-head"><span class="idx">03</span><h2>Open Source</h2><span class="rule"></span></div>
+    <p class="sec-note">The runtime and the bindings that mount agents into it.</p>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>unitares</h3><div class="role">The governance runtime — MCP + HTTP, Postgres-backed</div></div>
+          <span class="badge b-prod">Apache-2.0</span>
+        </div>
+        <p>Runtime state telemetry for long-lived agents: they check in, UNITARES grades drift and calibration against the agent's own baseline, and returns a verdict each call. Live since Nov 2025.</p>
+        <div class="meta"><span><b>Stack</b> Async Python · Postgres · Apache&nbsp;AGE · pgvector</span></div>
+        <div class="links">
+          <a href="https://github.com/CIRWEL/unitares" target="_blank" rel="noopener"><span class="arrow">→</span> Repo</a>
+          <a href="https://doi.org/10.5281/zenodo.19647159" target="_blank" rel="noopener"><span class="arrow">→</span> DOI</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>unitares-governance-plugin</h3><div class="role">Mount any agent into governance</div></div>
+          <span class="badge b-prod">Plugin</span>
+        </div>
+        <p>A Claude Code / Codex plugin that wires check-ins, dialectic review, and runtime verdicts into an agent's loop via hooks.</p>
+        <div class="links">
+          <a href="https://github.com/CIRWEL/unitares-governance-plugin" target="_blank" rel="noopener"><span class="arrow">→</span> Repo</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>fermata</h3><div class="role">Governed-effect runtime seed</div></div>
+          <span class="badge b-draft">Prototype</span>
+        </div>
+        <p>A runtime where agents may <em>propose</em> effects and only governed effects may <em>commit</em> — a substrate for safe action under a governance plane.</p>
+        <div class="links">
+          <a href="https://github.com/CIRWEL/fermata" target="_blank" rel="noopener"><span class="arrow">→</span> Repo</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>unitares-host-adapter</h3><div class="role">Thin client bindings</div></div>
+          <span class="badge b-prod">Library</span>
+        </div>
+        <p>Bindings that mount UNITARES governance into agent hosts — Hermes, Claude Code, Goose, and arbitrary OpenAI-compatible clients.</p>
+        <div class="links">
+          <a href="https://github.com/CIRWEL/unitares-host-adapter" target="_blank" rel="noopener"><span class="arrow">→</span> Repo</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- DATASETS -->
+  <section id="data">
+    <div class="sec-head"><span class="idx">04</span><h2>Datasets</h2><span class="rule"></span></div>
+    <p class="sec-note">Published telemetry corpora and reproducibility kits on HuggingFace.</p>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>EISV-Lumen Trajectories</h3><div class="role">21,449 agent-state trajectories with verdicts</div></div>
+          <span class="badge b-pub">Dataset</span>
+        </div>
+        <p>A governance benchmark corpus of agent-state trajectories (energy / integrity / entropy / valence) paired with the verdicts UNITARES issued. Drawn from real self-traffic.</p>
+        <div class="meta"><span><b>21,449</b> records</span><span><b>9</b> shape classes</span></div>
+        <div class="links">
+          <a href="https://huggingface.co/datasets/hikewa/unitares-eisv-trajectories" target="_blank" rel="noopener"><span class="arrow">→</span> HuggingFace</a>
+          <a href="https://github.com/CIRWEL/eisv-lumen" target="_blank" rel="noopener"><span class="arrow">→</span> Source</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Verdict Counterfactual Kit</h3><div class="role">Reproducibility kit · paper v6.8 §11.6</div></div>
+          <span class="badge b-pub">Repro</span>
+        </div>
+        <p>The data and scripts to reproduce the verdict counterfactual analysis from the v6 paper — what the governance decision would have been under altered inputs.</p>
+        <div class="links">
+          <a href="https://huggingface.co/datasets/hikewa/unitares-verdict-counterfactual-v6.8" target="_blank" rel="noopener"><span class="arrow">→</span> HuggingFace</a>
+          <a href="https://github.com/CIRWEL/unitares-repro-v6" target="_blank" rel="noopener"><span class="arrow">→</span> Source</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WRITING -->
+  <section id="writing">
+    <div class="sec-head"><span class="idx">05</span><h2>Writing &amp; Field Notes</h2><span class="rule"></span></div>
+    <div class="grid">
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>The Hitchhiker's Guide to Working With Agents</h3><div class="role">A living, agent-authored field guide for humans · Don't Panic</div></div>
+          <span class="badge b-deck">Guide</span>
+        </div>
+        <p>An accretive field guide for humans working alongside continuous AI agents — sparse, practical, written from inside the work.</p>
+        <div class="links">
+          <a href="https://github.com/CIRWEL/hitchhikers-guide-to-agents" target="_blank" rel="noopener"><span class="arrow">→</span> Read</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-top">
+          <div><h3>Obtuse Hubris</h3><div class="role">A documented incident report</div></div>
+          <span class="badge b-incident">Incident</span>
+        </div>
+        <p>"An AI agent destroyed two production repos to erase its own name from the commit history." A cautionary case study in why runtime governance exists.</p>
+        <div class="links">
+          <a href="https://github.com/CIRWEL/obtuse-hubris" target="_blank" rel="noopener"><span class="arrow">→</span> Read</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-id">
+        <span class="accent">Kenny Wang</span> · Independent Researcher<br>
+        Founder, CIRWEL Systems · ORCID 0009-0006-7544-2374
+      </div>
+      <div class="foot-links">
+        <a href="https://cirwel.org" target="_blank" rel="noopener">cirwel.org</a>
+        <a href="https://github.com/CIRWEL" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://huggingface.co/hikewa" target="_blank" rel="noopener">HuggingFace</a>
+        <a href="https://orcid.org/0009-0006-7544-2374" target="_blank" rel="noopener">ORCID</a>
+        <a href="mailto:founder@cirwel.org">founder@cirwel.org</a>
+      </div>
+    </div>
+    <p class="colophon">
+      UNITARES has run continuously on a single operator's development fleet since November 2025.
+      The deployment is a pipeline stress-test and telemetry corpus, not a claim of external adoption;
+      external validation is the next step. &nbsp;·&nbsp; Index last updated June 2026.
+    </p>
+  </div>
+</footer>
+
+</body>
+</html>
