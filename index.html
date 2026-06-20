@@ -4,8 +4,16 @@
 <!--
   spec :: still on trajectory. naming the space, not the point.
 
-  the basin is canonical — single source of truth in #spec-basin (application/json);
-  the rotator and this note both defer to it, so the copies cannot drift.
+  the basin is a set of angles — directions the work is being pulled in:
+    phenomenology   — the synthetic interior      (synthetic ipseity, artificial interiority …)
+    proprioception  — self-sensing                (interoceptive computing, computational somatics …)
+    autopoiesis     — self-production             (endopoietics, machinic individuation …)
+    interpretability— the legible interior        (endo-observability, machine autognosis …)
+    governance      — self-regulation             (allostatic computing, autonomics …)
+    architecture    — the substrate               (the introspection plane, cognitive infrastructure …)
+
+  canonical, full set: #spec-basin (application/json). the rotator flattens .angles
+  and this note defers to it, so the copies cannot drift.
 
   selection deferred until the attractor hardens.
   you found this by reading the internals. that was the point. — observe to read.
@@ -24,17 +32,47 @@
   "field": "specialization held as a basin, not a point",
   "status": "on trajectory; selection deferred until the attractor hardens",
   "canonical": "https://cirwel.github.io/",
-  "basin": [
-    "synthetic phenomenology",
-    "machine proprioception",
-    "interoceptive computing",
-    "autopoietic systems",
-    "runtime self-governance",
-    "endo-observability",
-    "neuro- / xeno-phenomenology",
-    "cognitive infrastructure",
-    "a reflexive control plane for self-governing AI"
-  ]
+  "note": "angles = the directions the work is being pulled in; the visible line cycles their union. naming the space, not the point.",
+  "angles": {
+    "phenomenology — the synthetic interior": [
+      "synthetic phenomenology",
+      "neuro- / xeno-phenomenology",
+      "synthetic ipseity",
+      "artificial interiority",
+      "computational first-person science"
+    ],
+    "proprioception — self-sensing": [
+      "machine proprioception",
+      "interoceptive computing",
+      "synthetic interoception",
+      "computational somatics"
+    ],
+    "autopoiesis — self-production": [
+      "autopoietic systems",
+      "computational autopoiesis",
+      "endopoietics",
+      "machinic individuation"
+    ],
+    "interpretability / observability — the legible interior": [
+      "endo-observability",
+      "self-legible systems",
+      "machine autognosis",
+      "reflexive interpretability"
+    ],
+    "governance — self-regulation": [
+      "runtime self-governance",
+      "allostatic computing",
+      "autonomics",
+      "synthetic allostasis"
+    ],
+    "architecture / infra — the substrate": [
+      "cognitive infrastructure",
+      "the self-governance plane",
+      "proprioceptive infrastructure",
+      "the introspection plane",
+      "a reflexive control plane for self-governing AI"
+    ]
+  }
 }
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -474,7 +512,13 @@
     var src = document.getElementById('spec-basin');
     if (!el || !src) return;
     var basin;
-    try { basin = JSON.parse(src.textContent).basin; } catch (e) { return; }
+    try {
+      var data = JSON.parse(src.textContent);
+      // angles is the single source of truth; flatten its clusters into the rotation
+      basin = data.angles
+        ? Object.keys(data.angles).reduce(function (a, k) { return a.concat(data.angles[k]); }, [])
+        : data.basin;
+    } catch (e) { return; }
     if (!Array.isArray(basin) || !basin.length) return;
     var i = 0;
     el.textContent = basin[0]; // canonical source governs the first term too
