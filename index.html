@@ -180,7 +180,7 @@
 <div class="wrap">
   <div class="stats">
     <div class="stat"><div class="n">Nov&nbsp;2025</div><div class="l">Live deployment</div></div>
-    <div class="stat"><div class="n">21,449</div><div class="l">Published trajectories</div></div>
+    <div class="stat"><div class="n">20,655</div><div class="l">Real edge-agent trajectories</div></div>
     <div class="stat"><div class="n">3</div><div class="l">Papers / preprints</div></div>
     <div class="stat"><div class="n">Solo</div><div class="l">Operator stress-test</div></div>
   </div>
@@ -212,7 +212,7 @@
           <div><h3>Trajectory Identity</h3><div class="role">A Mathematical Framework for Enactive AI Self-Hood · Wang 2026b</div></div>
           <span class="badge b-draft">Preprint v0.14</span>
         </div>
-        <p>Identity for AI agents framed as a dynamical-systems trajectory signature, with a first multi-agent discrimination pilot (§6.5). Grounded on Lumen — 65 days, 226k observations.</p>
+        <p>Identity for AI agents framed as a dynamical-systems trajectory signature, with a first multi-agent discrimination pilot (§6.5). Grounded on a 65-day embedded deployment — 226k observations.</p>
         <div class="meta"><span><b>DOI</b> 10.5281/zenodo.20098168</span></div>
         <div class="links">
           <a href="https://doi.org/10.5281/zenodo.20098168" target="_blank" rel="noopener"><span class="arrow">→</span> Zenodo</a>
@@ -254,10 +254,10 @@
 
       <div class="card">
         <div class="card-top">
-          <div><h3>Lumen</h3><div class="role">Embodied AI on a Raspberry Pi — the longitudinal testbed</div></div>
+          <div><h3>Embedded Testbed (Raspberry Pi)</h3><div class="role">Longitudinal deployment under governance</div></div>
           <span class="badge b-prod">Production</span>
         </div>
-        <p>An edge-deployed agent on physical hardware with real sensor fusion. Maintains persistent identity across sessions and supplies the longitudinal telemetry cited in the papers.</p>
+        <p>A continuously-running agent on physical hardware (Pi 4, real sensors) under UNITARES governance since November 2025 — the longitudinal telemetry source behind the papers and the EISV dataset.</p>
         <div class="meta"><span><b>Pi&nbsp;4</b> hardware</span><span><b>I²C / GPIO</b> sensors</span></div>
         <div class="links">
           <a href="https://github.com/CIRWEL/anima-mcp" target="_blank" rel="noopener"><span class="arrow">→</span> anima-mcp</a>
@@ -352,11 +352,11 @@
 
       <div class="card">
         <div class="card-top">
-          <div><h3>EISV-Lumen Trajectories</h3><div class="role">21,449 agent-state trajectories with verdicts</div></div>
+          <div><h3>EISV Trajectories</h3><div class="role">32,181 agent-state trajectories, labeled by shape</div></div>
           <span class="badge b-pub">Dataset</span>
         </div>
-        <p>A governance benchmark corpus of agent-state trajectories (energy / integrity / entropy / valence) paired with the verdicts UNITARES issued. Drawn from real self-traffic.</p>
-        <div class="meta"><span><b>21,449</b> records</span><span><b>9</b> shape classes</span></div>
+        <p>A governance benchmark corpus of time-windowed EISV trajectories (energy / integrity / entropy / valence), each labeled with one of 9 dynamical-shape classes — drawn from the real embedded deployment plus class-balanced synthetic augmentation.</p>
+        <div class="meta"><span><b>20,655</b> real</span><span><b>11,526</b> synthetic</span><span><b>9</b> shape classes</span></div>
         <div class="links">
           <a href="https://huggingface.co/datasets/hikewa/unitares-eisv-trajectories" target="_blank" rel="noopener"><span class="arrow">→</span> HuggingFace</a>
           <a href="https://github.com/CIRWEL/eisv-lumen" target="_blank" rel="noopener"><span class="arrow">→</span> Source</a>
