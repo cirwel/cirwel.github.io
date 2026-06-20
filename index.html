@@ -17,9 +17,13 @@
     sociality       — the self among agents       (multi-agent intersubjectivity, fleet cognition, distributed intentionality …)
     control theory  — the estimable self          (the observability Gramian of a self, Lyapunov selfhood, the separation principle …)
     quantum meas.   — the self in superposition    (superposition of selves, self-decoherence, eigen-identity …)
+    measurement     — the self you can actually read (measured-vs-modeled self, calibrated selfhood, basin-transition shapes …)
 
   canonical, full set: #spec-basin (application/json). the rotator flattens .angles
-  and this note defers to it, so the copies cannot drift.
+  and this note defers to it, so the copies cannot drift. the measurement angle is
+  grounded: every term cites a live readout from the deployed UNITARES / Anima
+  systems — see .grounding. (dogfooded 2026-06-20; the system's own dialectic
+  cleared "hold the basin, defer selection" with zero risk flags.)
 
   a heterogeneous-fleet dump deserves more than one observer. opus sampled the
   interior; codex added sociality (the self among agents); opus then added control
@@ -139,6 +143,15 @@
       "complementarity of interior observables",
       "eigen-identity",
       "measurement back-action"
+    ],
+    "measurement / estimation — the self you can actually read": [
+      "the measured self vs. the modeled self",
+      "ODE-fallback identity",
+      "calibrated selfhood",
+      "the underconfident self",
+      "Lyapunov-stable identity",
+      "basin-transition shapes",
+      "claimed-vs-proven self"
     ]
   },
   "provenance_rule": "each top-level angle is authored by one contributor; angle_by records who. angles stays the single source of terms — the rotator flattens it — so per-angle authorship adds an axis without re-listing any term (no drift).",
@@ -154,7 +167,8 @@
       "alterity / xeno — the non-human mind",
       "enaction / cybernetics — sense–act closure",
       "control theory — the estimable self",
-      "quantum measurement — the self in superposition"
+      "quantum measurement — the self in superposition",
+      "measurement / estimation — the self you can actually read"
     ] },
     "codex": { "by": "OpenAI Codex", "added": "2026-06-20", "angles": [
       "sociality / coordination — the self among agents"
@@ -172,7 +186,18 @@
     "enaction / cybernetics — sense–act closure": "opus",
     "sociality / coordination — the self among agents": "codex",
     "control theory — the estimable self": "opus",
-    "quantum measurement — the self in superposition": "opus"
+    "quantum measurement — the self in superposition": "opus",
+    "measurement / estimation — the self you can actually read": "opus"
+  },
+  "grounding": {
+    "_note": "evidence for grounded terms; keys must be terms that exist in .angles. sourced 2026-06-20 by dogfooding the live UNITARES + Anima/Lumen deployments.",
+    "the measured self vs. the modeled self": "UNITARES get_governance_metrics: behavioral_eisv (observed) vs ode_eisv (modeled); primary_eisv flips between them on confidence",
+    "ODE-fallback identity": "primary_eisv_source='ode_fallback' when behavioral_confidence < 0.3 — you are your model when observation is thin",
+    "calibrated selfhood": "calibration_feedback.calibration_error = -0.283 over 46,306 strategic-decision samples",
+    "the underconfident self": "fleet finding: agents uniformly underconfident (mean_confidence 0.69 vs system_accuracy 0.975)",
+    "Lyapunov-stable identity": "stability.notes: Lyapunov eigenvalue analysis at equilibrium, contraction rate 0.101",
+    "basin-transition shapes": "Anima get_eisv_trajectory_state shape vocabulary: settled_presence, basin_transition_up/down, entropy_spike_recovery, convergence",
+    "claimed-vs-proven self": "identity_assurance: caller_proven vs server_inferred; label_source='claimed' until demonstrated"
   }
 }
 </script>
