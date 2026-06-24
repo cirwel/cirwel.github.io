@@ -389,9 +389,10 @@
       My framework, <strong>UNITARES</strong>, gives agents a continuous reading of their own
       operational state — coherence, entropy, calibration, drift — from behavioral telemetry and a
       dynamical-systems state model, running on my development fleet since November 2025. Its
-      counterpart, <strong>Anima</strong>, runs the same state model on physical hardware: an
-      edge agent that senses and reports its own interior. Two deployed systems — a
-      <em>governed</em> self and a <em>self-sensing</em> one — and the instrumentation between them.
+      counterpart, <strong>Anima</strong>, runs the same state model on physical hardware:
+      a Raspberry Pi sensor stack that maps real environmental and system telemetry into
+      EISV trajectories. Two deployed systems — a governed fleet and a physical edge
+      testbed — and the instrumentation between them.
       This page indexes that work: papers, systems, datasets, and decks.
     </p>
     <div class="contact">
@@ -481,10 +482,10 @@
 
       <div class="card">
         <div class="card-top">
-          <div><h3>Anima</h3><div class="role">A self-sensing edge agent · UNITARES's counterpart</div></div>
+          <div><h3>Anima</h3><div class="role">Physical longitudinal testbed · UNITARES counterpart</div></div>
           <span class="badge b-prod">Production</span>
         </div>
-        <p>A continuously-running agent on physical hardware (Pi 4, real sensors) since November 2025. It runs the same EISV state model as UNITARES, turned inward — sensing, classifying, and expressing its own interior state. The longitudinal source behind the papers and the EISV dataset. Where UNITARES governs a fleet, Anima is a single self, observed.</p>
+        <p>A continuously-running Raspberry Pi 4 sensor deployment since November 2025. It maps real temperature, light, humidity, pressure, and system telemetry into EISV trajectories, runs local display/drawing loops, and contributes the longitudinal traces behind the papers and EISV dataset. The repo includes a creature/art interface; the research claim is the measured sensor-to-EISV pipeline.</p>
         <div class="meta"><span><b>Pi&nbsp;4</b> hardware</span><span><b>I²C / GPIO</b> sensors</span></div>
         <div class="links">
           <a href="https://github.com/CIRWEL/anima-mcp" target="_blank" rel="noopener"><span class="arrow">→</span> anima-mcp</a>
