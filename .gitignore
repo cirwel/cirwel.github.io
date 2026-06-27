@@ -1,0 +1,6 @@
+# Local governance session cache — never publish to the GitHub Pages repo
+.unitares/
+
+# OS / editor cruft
+.DS_Store
+*.swp
