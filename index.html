@@ -240,9 +240,9 @@
     --line-2:#26343f;
     --text:#dfe8e6;
     --muted:#7d8f97;
-    --muted-2:#566570;
+    --muted-2:#718590;
     --phos:#5eead4;
-    --phos-dim:#2f7d72;
+    --phos-dim:#3ca89a;
     --amber:#f5a623;
     --amber-dim:#8a5e1e;
     --red:#ff6b6b;
@@ -266,7 +266,7 @@
   }
   a { color:var(--phos); text-decoration:none; }
   a:hover { text-decoration:underline; }
-  .wrap { max-width:var(--maxw); margin:0 auto; padding:0 1.5rem; }
+  .wrap { width:100%; max-width:var(--maxw); margin:0 auto; padding:0 1.5rem; }
 
   /* top bar */
   .topbar {
@@ -293,6 +293,7 @@
   @media (prefers-reduced-motion: reduce) { .spec .cyc { transition:none; } }
   .hero h1 { font-family:var(--serif); font-weight:400; font-size:clamp(2.6rem,6vw,4.2rem); line-height:1.02; letter-spacing:-0.01em; }
   .hero h1 .accent { color:var(--phos); font-style:italic; }
+  .mobile-break { display:none; }
   .hero .lede { max-width:660px; margin-top:1.4rem; font-size:1.06rem; color:var(--text); }
   .hero .sub { max-width:680px; margin-top:0.9rem; color:var(--muted); font-size:0.96rem; }
   .contact { display:flex; flex-wrap:wrap; gap:0.7rem; margin-top:1.8rem; }
@@ -302,12 +303,20 @@
     padding:0.45rem 0.9rem; border-radius:6px; transition:all 0.18s;
   }
   .contact a:hover { border-color:var(--phos-dim); color:var(--phos); text-decoration:none; transform:translateY(-1px); }
+  @media (max-width:520px){
+    .hero { padding:4.8rem 0 2.6rem; }
+    .hero h1 { font-size:clamp(2.5rem,10.5vw,3rem); }
+    .mobile-break { display:inline; }
+    .contact { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+    .contact a { text-align:center; padding:0.45rem 0.6rem; }
+    .contact a[href^="mailto:"] { grid-column:span 2; }
+  }
 
   /* stats */
   .stats { display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border-bottom:1px solid var(--line); }
   .stat { background:var(--ink); padding:1.5rem 1rem; text-align:center; }
   .stat .n { font-family:var(--mono); font-size:1.5rem; font-weight:600; color:var(--phos); }
-  .stat .l { font-family:var(--mono); font-size:0.66rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:0.35rem; }
+  .stat .l { font-family:var(--mono); font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); margin-top:0.35rem; }
   @media (max-width:640px){ .stats { grid-template-columns:repeat(2,1fr); } }
 
   /* sections */
@@ -377,22 +386,22 @@
 
 <header class="hero">
   <div class="wrap">
-    <div class="kicker">Independent Researcher · Founder, CIRWEL Systems</div>
+    <div class="kicker">Independent Researcher · Founder,<span class="mobile-break"><br></span> CIRWEL Systems</div>
     <div class="spec" aria-live="off"><span class="lbl">specializing in&nbsp;</span><span class="cyc" id="spec-cyc">synthetic phenomenology</span></div>
-    <h1>Kenny&nbsp;Wang —<br>runtime <span class="accent">governance</span> for<br>AI-agent fleets.</h1>
+    <h1>Kenny&nbsp;Wang —<br>runtime <span class="accent">governance</span><span class="mobile-break"><br></span> for<br>AI-agent fleets.</h1>
     <p class="lede">
-      I build runtime safety infrastructure for autonomous AI agents — the layer that
+      I build runtime governance and observability infrastructure for autonomous AI agents — the layer that
       operates <em>after</em> deployment, while agents are actually running.
     </p>
     <p class="sub">
-      My framework, <strong>UNITARES</strong>, gives agents a continuous reading of their own
-      operational state — coherence, entropy, calibration, drift — from behavioral telemetry and a
-      dynamical-systems state model, running on my development fleet since November 2025. Its
-      counterpart, <strong>Anima</strong>, runs the same state model on physical hardware:
+      <strong>UNITARES</strong> turns behavioral telemetry into continuous agent-state estimates —
+      coherence, entropy, calibration, drift — and returns a runtime verdict while agents operate.
+      It has run on my development fleet since November 2025. Its counterpart,
+      <strong>Anima</strong>, runs the same state model on physical hardware:
       a Raspberry Pi sensor stack that maps real environmental and system telemetry into
       EISV trajectories. Two deployed systems — a governed fleet and a physical edge
-      testbed — and the instrumentation between them.
-      This page indexes that work: papers, systems, datasets, and decks.
+      testbed — and the instrumentation between them. This page indexes that work:
+      papers, systems, datasets, and decks.
     </p>
     <div class="contact">
       <a href="https://cirwel.org" target="_blank" rel="noopener">cirwel.org&nbsp;↗</a>
@@ -527,7 +536,7 @@
           <div><h3>unitares</h3><div class="role">The governance runtime — MCP + HTTP, Postgres-backed</div></div>
           <span class="badge b-prod">Apache-2.0</span>
         </div>
-        <p>Runtime state telemetry for long-lived agents: they check in, UNITARES grades drift and calibration against the agent's own baseline, and returns a verdict each call. Live since Nov 2025.</p>
+        <p>Runtime state telemetry for long-lived agents: agents check in; UNITARES grades drift and calibration against the agent's own baseline, and returns a verdict each call. Live since Nov 2025.</p>
         <div class="meta"><span><b>Stack</b> Async Python · Postgres · Apache&nbsp;AGE · pgvector</span></div>
         <div class="links">
           <a href="https://github.com/CIRWEL/unitares" target="_blank" rel="noopener"><span class="arrow">→</span> Repo</a>
@@ -625,7 +634,7 @@
     <p class="colophon">
       UNITARES has run continuously on a single operator's development fleet since November 2025.
       The deployment is a pipeline stress-test and telemetry corpus, not a claim of external adoption;
-      external validation is the next step. &nbsp;·&nbsp; Index last updated June 2026.
+      external validation is the next step. &nbsp;·&nbsp; Index last updated June 29, 2026.
     </p>
   </div>
 </footer>
