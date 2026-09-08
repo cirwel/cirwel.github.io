@@ -1,0 +1,92 @@
+<!--
+  CIRWEL Systems — engraved hex device.
+
+  Adapts the existing CIRWEL hex logo (flat-top hexagonal frame with nested
+  inner hex and central element) into a copperplate-engraving aesthetic that
+  fits the publication grammar of the site:
+
+    • Single oxblood ink on cream paper, no 3D shading
+    • Hairline outlines with diagonal cross-hatching on the right-hand faces
+      to suggest depth — the 18th-c illustration trick for showing solidity
+      without rendering
+    • A small filled hex device at center, the way 18th-c printer's marks
+      seated their device against an inner field
+    • Subtle SVG turbulence-displacement filter applied to all strokes for
+      a hand-cut roughness, so the lines look engraved rather than vector
+      perfect
+
+  Intended for view as a brand mark, not as a favicon — too detailed to
+  legibly render at 16x16. View at https://cirwel.org/logo-engraved.svg
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="600" height="600">
+  <defs>
+    <!-- Hand-cut engraving roughness — slight displacement of stroke paths -->
+    <filter id="engrave" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="0.6"/>
+    </filter>
+
+    <!-- Cross-hatch pattern for shading the right-hand faces -->
+    <pattern id="hatch" patternUnits="userSpaceOnUse" width="3" height="3" patternTransform="rotate(35)">
+      <line x1="0" y1="0" x2="0" y2="3" stroke="#7A1F1F" stroke-width="0.5"/>
+    </pattern>
+
+    <!-- Diagonal hatch (reverse direction) for inner shading -->
+    <pattern id="hatch2" patternUnits="userSpaceOnUse" width="2.4" height="2.4" patternTransform="rotate(-50)">
+      <line x1="0" y1="0" x2="0" y2="2.4" stroke="#7A1F1F" stroke-width="0.4"/>
+    </pattern>
+
+    <!-- Reusable hex paths (flat-top hexagon, parametric by radius) -->
+    <!-- Outer hex r=78, center 100,100 -->
+    <polygon id="hexOuter"
+      points="61,32.4 139,32.4 178,100 139,167.6 61,167.6 22,100"/>
+    <!-- Inner hex r=52 -->
+    <polygon id="hexInner"
+      points="74,55 126,55 152,100 126,145 74,145 48,100"/>
+    <!-- Innermost hex r=18 — the center device -->
+    <polygon id="hexDevice"
+      points="91,84.4 109,84.4 118,100 109,115.6 91,115.6 82,100"/>
+
+    <!-- Right-hand-face shading region: triangle from right vertex
+         covering the right two faces of the outer hex -->
+    <polygon id="outerRightFaces"
+      points="139,32.4 178,100 139,167.6 100,100"/>
+    <polygon id="innerRightFaces"
+      points="126,55 152,100 126,145 100,100"/>
+  </defs>
+
+  <!-- Cream paper ground -->
+  <rect width="200" height="200" fill="#F5F1E8"/>
+
+  <!-- The whole engraving group, with hand-cut roughness filter -->
+  <g filter="url(#engrave)">
+
+    <!-- 1. Cross-hatching on the right faces of the outer hex (the "shadow" side) -->
+    <use href="#outerRightFaces" fill="url(#hatch)" opacity="0.9"/>
+
+    <!-- 2. Outer hex outline, heavier stroke -->
+    <use href="#hexOuter" fill="none" stroke="#7A1F1F" stroke-width="2" stroke-linejoin="miter"/>
+
+    <!-- 3. Cross-hatching on the right faces of the inner hex (denser, suggests inset depth) -->
+    <use href="#innerRightFaces" fill="url(#hatch2)" opacity="0.85"/>
+
+    <!-- 4. Inner hex outline -->
+    <use href="#hexInner" fill="none" stroke="#7A1F1F" stroke-width="1.4" stroke-linejoin="miter"/>
+
+    <!-- 5. Connecting lines between outer and inner hex vertices — the "edges" of the cube-in-cube -->
+    <g stroke="#7A1F1F" stroke-width="0.7" opacity="0.65">
+      <line x1="61"  y1="32.4"  x2="74"  y2="55"/>
+      <line x1="139" y1="32.4"  x2="126" y2="55"/>
+      <line x1="178" y1="100"   x2="152" y2="100"/>
+      <line x1="139" y1="167.6" x2="126" y2="145"/>
+      <line x1="61"  y1="167.6" x2="74"  y2="145"/>
+      <line x1="22"  y1="100"   x2="48"  y2="100"/>
+    </g>
+
+    <!-- 6. Center device — solid filled hex, the printer's-mark dot -->
+    <use href="#hexDevice" fill="#7A1F1F"/>
+
+    <!-- 7. A single hairline ring around the whole device, matching favicon.svg sibling style -->
+    <circle cx="100" cy="100" r="92" fill="none" stroke="#C9C0AE" stroke-width="0.6"/>
+  </g>
+</svg>
