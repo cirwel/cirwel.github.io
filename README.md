@@ -1,9 +1,7 @@
 # cirwel.github.io
 
-Single-page index of Kenny Wang / CIRWEL Systems work — papers, systems, datasets, decks.
+Single-page research index for Kenny Wang / CIRWEL Systems: systems, papers, datasets, and experiments around runtime infrastructure for persistent AI agents.
+
 Served as a GitHub Pages user site at **https://cirwel.github.io/**.
 
-Self-contained: everything is in `index.html` (no build step). To update, edit the file and `git push`.
-
-The hidden specialization basin in `index.html` is explained in
-[`SPEC_BASIN_REFLECTIONS.md`](SPEC_BASIN_REFLECTIONS.md).
+The site is self-contained in `index.html` with no build step. The public entrance is intentionally plain; deeper research vocabulary belongs in the linked papers and project repositories rather than in a rotating homepage taxonomy.
