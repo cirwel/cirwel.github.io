@@ -23,12 +23,40 @@ The tokens in `index.html` are copied from `cirwel-site`'s
 than Tailwind because this repo is served straight from Pages with no build
 step; if the two surfaces disagree, cirwel-site is the source of truth.
 
+## Checked
+
+`scripts/check-index.py` verifies that the page still lists everything CIRWEL has
+published, against the **live** page and the **live** Zenodo API:
+
+- **completeness** — every public deposit under the ORCID has its concept DOI on
+  the page. This is the leg that catches a paper nobody linked;
+- **count** — the stated number of papers equals the number of deposits Zenodo
+  classes as publications (software and data are deliberately not counted);
+- **no strays** — every Zenodo DOI on the page is a concept DOI, so a reader is
+  never pinned to a stale revision;
+- **assets** — every vendored font and mark resolves.
+
+Ground truth is neither half of the page. A hand-maintained count beside a
+hand-maintained list cannot catch its own omission, because both halves are
+edited by whoever forgot. Zenodo's record is written by the act of depositing.
+
+    ./scripts/check-index.py              # the live site
+    ./scripts/check-index.py --local      # ./index.html instead
+    ./scripts/check-index.py --self-test  # offline negative control
+
+Exit codes are the contract, matching `check-claims.py` in cirwel-site: `0` ok,
+`1` drift, `2` unverifiable — **never `0` because a fetch failed**.
+⛔Do not edit the checker without re-running `--self-test`, which replays the
+2026-09-07 page (two deposits missing, count understated) and asserts it fails.
+
 ## Layout
 
 - `index.html` — the whole page. No build step, no dependencies.
 - `fonts/` — self-hosted woff2 subsets (latin + latin-ext). No font CDN: the
   page must render identically with no third-party request.
 - `assets/` — brand marks, copied from `cirwel-site/public`.
+- `scripts/check-index.py` — the deposit check above. Standard library + curl,
+  no dependencies.
 
 The public entrance is intentionally plain; deeper research vocabulary belongs in
 the linked papers and project repositories rather than in a rotating homepage
