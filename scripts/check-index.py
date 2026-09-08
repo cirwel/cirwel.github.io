@@ -25,6 +25,14 @@ Four legs, checked against the LIVE page and the LIVE Zenodo API:
                     a typo, and catches a VERSION doi pasted where the concept
                     doi belongs (a version doi freezes the reader on an old PDF).
   D. assets       — every vendored font and mark the page references resolves.
+  E. register     — the palette and typefaces still match cirwel-site's, which
+                    is the source of truth for the house style. This page is a
+                    hand-written mirror of those tokens (the Pages repo has no
+                    build step), so nothing but a check stops the two surfaces
+                    drifting apart again. They already did once: the 2026-09-07
+                    rebuild put this page in a near-black ground with a bright
+                    accent, re-opening the two-face split that consolidating
+                    cirwelsystems.com into cirwel.org had closed.
 
 Exit codes are the contract, and match scripts/check-claims.py in cirwel-site:
 
@@ -56,6 +64,8 @@ PAGE_URL = "https://cirwel.github.io/"
 ORCID = "0009-0006-7544-2374"
 # Unauthenticated Zenodo caps page size at 25 and 400s above it, so this
 # paginates rather than assuming one page will always hold every deposit.
+TOKENS_URL = "https://raw.githubusercontent.com/cirwel/cirwel-site/master/tailwind.config.mjs"
+
 ZENODO_QUERY = (
     "https://zenodo.org/api/records"
     "?q=metadata.creators.person_or_org.identifiers.identifier:%22" + ORCID + "%22"
@@ -194,12 +204,62 @@ def check_assets(page_html, local):
     return failures
 
 
+def check_register(page_html):
+    """Leg E. The palette and faces still match cirwel-site.
+
+    Returns (failures, unverifiable). Unverifiable is not a pass.
+    """
+    config = fetch(TOKENS_URL, "cirwel-site's design tokens")
+    if config is None:
+        return [], True
+
+    colors = dict(re.findall(r"(\w+):\s*'(#[0-9A-Fa-f]{6})'", config))
+    if len(colors) < 4:
+        # The config was reachable but did not parse as expected — a renamed or
+        # restructured theme block. Say so rather than passing on zero tokens.
+        return [], True
+    return register_failures(config, page_html), False
+
+
+def register_failures(config, page_html):
+    """Compare cirwel-site's tokens against this page. No network, so the
+    self-test can exercise it offline."""
+    colors = dict(re.findall(r"(\w+):\s*'(#[0-9A-Fa-f]{6})'", config))
+    page_lower = page_html.lower()
+
+    failures = [
+        f"[E] token {name} ({hexval}) from cirwel-site is not in this page's CSS"
+        for name, hexval in sorted(colors.items())
+        if hexval.lower() not in page_lower
+    ]
+    for face in re.findall(r'"([^"]+ Variable)"', config):
+        if face.lower() not in page_lower:
+            failures.append(f"[E] typeface {face!r} from cirwel-site is not used by this page")
+
+    return failures
+
+
 SELF_TEST_PAGE = """<html><body>
   <div class="n">3</div><div class="k">papers and preprints</div>
   <a href="https://doi.org/10.5281/zenodo.19647159">Zenodo</a>
   <a href="https://doi.org/10.5281/zenodo.20098168">Zenodo</a>
   <img src="assets/mark-c-illuminated.svg">
 </body></html>"""
+
+# Frozen copy of the shape cirwel-site's theme block has. Only used by the
+# self-test, so the negative control needs no network.
+SELF_TEST_TOKENS = """
+      colors: {
+        cream:   '#F5F1E8',
+        ink:     '#1A1612',
+        oxblood: '#7A1F1F',
+        stone:   '#5C544A',
+      },
+      fontFamily: {
+        serif:   ['"EB Garamond Variable"', 'Georgia', 'serif'],
+        display: ['"Bodoni Moda Variable"', 'Georgia', 'serif'],
+      },
+"""
 
 SELF_TEST_DEPOSITS = [
     ("10.5281/zenodo.19647159", "UNITARES", True),
@@ -225,7 +285,27 @@ def self_test():
     if "B" not in legs:
         print("FAIL: leg B did not fire on a page understating its count")
         return DRIFT
-    print(f"self-test PASSED — {len(failures)} failures raised, legs A and B both fired")
+    # Leg E negative controls: the register must not be able to drift back to
+    # the 2026-09-07 regression without this script saying so.
+    good = "background:#F5F1E8; color:#1A1612; accent:#7A1F1F; muted:#5C544A;" \
+           " font-family:'Bodoni Moda Variable','EB Garamond Variable';"
+    if register_failures(SELF_TEST_TOKENS, good):
+        print("FAIL: leg E fired on a page that does match the house tokens")
+        return DRIFT
+
+    dark = good.replace("#F5F1E8", "#0b1016").replace("#7A1F1F", "#6ee7c2")
+    if not register_failures(SELF_TEST_TOKENS, dark):
+        print("FAIL: leg E did not fire on a page re-themed to a dark ground")
+        return DRIFT
+    print("    [E] fired on a dark re-theme, as it must")
+
+    sans = good.replace("Bodoni Moda Variable", "Inter").replace("EB Garamond Variable", "Inter")
+    if not register_failures(SELF_TEST_TOKENS, sans):
+        print("FAIL: leg E did not fire on a page whose serifs were swapped for a sans")
+        return DRIFT
+    print("    [E] fired on a typeface swap, as it must")
+
+    print(f"self-test PASSED — legs A, B and E all fired on their controls")
     return 0
 
 
@@ -261,13 +341,22 @@ def main():
     print(f"  {len(deposits)} public deposits on record")
     failures = check(page, deposits) + check_assets(page, local)
 
+    register_failures, register_unverifiable = check_register(page)
+    failures += register_failures
+    if register_unverifiable:
+        print("  ! could not read cirwel-site's design tokens — register NOT checked")
+
     if failures:
         print(f"\nDRIFT — {len(failures)} problem(s):")
         for f in failures:
             print("   ", f)
         return DRIFT
 
-    print("  all deposits listed, count agrees, no stray DOIs, assets resolve")
+    if register_unverifiable:
+        print("  deposits and assets check out, but the register was not verified")
+        return UNVERIFIABLE
+
+    print("  all deposits listed, count agrees, no stray DOIs, assets and register match")
     return 0
 
 
