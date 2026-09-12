@@ -103,10 +103,15 @@
        Light is the house register: a copperplate line engraving pulled on laid
        cream. Dark is not that inverted — it is the same plate pulled as a
        MEZZOTINT, the intaglio process that works dark-to-light, grounding the
-       plate to print solid and burnishing the lights back out of it. Every
-       dark token holds the same contrast ratio against its ground that its
-       light counterpart holds against cream, which is what makes the two one
-       design rather than two.
+       plate to print solid and burnishing the lights back out of it.
+
+       The dark set is deliberately NOT ratio-parity with the light set. A
+       screen is emissive, not reflective, so light glyphs bloom into their
+       counters and light hairlines read thinner than dark ones on paper. Body
+       ink therefore comes DOWN (12.5:1, about 0.78x cream's 16:1) and drawn
+       marks come UP (rules 2.2:1, about 1.36x cream's 1.6:1). The accent
+       cannot reach oxblood's 9.1:1 on this ground without becoming a salmon
+       pink, so it stops at 6.4:1 and that gap is stated rather than hidden.
 
        Mirrored from cirwel-site's tailwind.config.mjs and global.css.
        scripts/check-index.py leg E asserts every token there appears here.
@@ -139,19 +144,21 @@
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
       --cream:   #15110D;  /* bistre-black ground */
-      --ink:     #E8E0D0;  /* burnished light */
-      --oxblood: #D0604A;  /* sanguine, lifted to 4.99:1 — #7A1F1F on this
-                              ground is 2:1 and a hairline in it disappears */
-      --ochre:   #D6A44A;
-      --stone:   #A89F90;  /* 7.3:1, as stone is on cream */
-      --sepia:   #3A3229;  /* 1.5:1, as sepia is on cream */
+      --ink:     #DBD2BF;  /* 12.5:1, DOWN from cream's 16:1 — light text
+                              blooms, so parity here reads as glare */
+      --oxblood: #E07A5F;  /* sanguine, 6.4:1 — #7A1F1F on this ground is 2:1
+                              and a hairline in it disappears entirely */
+      --ochre:   #9C7028;  /* 4.3:1 (carries no markup on this page today) */
+      --stone:   #A89F90;  /* 7.2:1, near cream's 6.6:1 */
+      --sepia:   #554A3C;  /* 2.2:1, UP from cream's 1.6:1 — a light hairline
+                              on a dark ground reads thinner than the reverse */
 
       --grain-opacity: 0.05;
       --grain-blend: screen;
       /* On a mezzotint ground the tooth is what catches the light, so the
          specks lighten rather than darken. */
       --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.80 0 0 0 0 0.68 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      --rule-soft: rgb(208 96 74 / 0.35);
+      --rule-soft: rgb(224 122 95 / 0.35);
       --running-head-bg: rgb(21 17 13 / 0.94);
       color-scheme: dark;
       }
@@ -159,19 +166,21 @@
 
     :root[data-theme="dark"] {
       --cream:   #15110D;  /* bistre-black ground */
-      --ink:     #E8E0D0;  /* burnished light */
-      --oxblood: #D0604A;  /* sanguine, lifted to 4.99:1 — #7A1F1F on this
-                              ground is 2:1 and a hairline in it disappears */
-      --ochre:   #D6A44A;
-      --stone:   #A89F90;  /* 7.3:1, as stone is on cream */
-      --sepia:   #3A3229;  /* 1.5:1, as sepia is on cream */
+      --ink:     #DBD2BF;  /* 12.5:1, DOWN from cream's 16:1 — light text
+                              blooms, so parity here reads as glare */
+      --oxblood: #E07A5F;  /* sanguine, 6.4:1 — #7A1F1F on this ground is 2:1
+                              and a hairline in it disappears entirely */
+      --ochre:   #9C7028;  /* 4.3:1 (carries no markup on this page today) */
+      --stone:   #A89F90;  /* 7.2:1, near cream's 6.6:1 */
+      --sepia:   #554A3C;  /* 2.2:1, UP from cream's 1.6:1 — a light hairline
+                              on a dark ground reads thinner than the reverse */
 
       --grain-opacity: 0.05;
       --grain-blend: screen;
       /* On a mezzotint ground the tooth is what catches the light, so the
          specks lighten rather than darken. */
       --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.80 0 0 0 0 0.68 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      --rule-soft: rgb(208 96 74 / 0.35);
+      --rule-soft: rgb(224 122 95 / 0.35);
       --running-head-bg: rgb(21 17 13 / 0.94);
       color-scheme: dark;
     }
