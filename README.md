@@ -1,7 +1,7 @@
 # cirwel.github.io
 
 Single-page research index for Kenny Wang / CIRWEL: systems, papers, datasets, and
-experiments around runtime infrastructure for persistent AI agents.
+experiments around infrastructure for long-lived AI agents.
 
 Served as a GitHub Pages user site at **https://cirwel.github.io/**.
 
