@@ -11,6 +11,19 @@
   <meta property="og:url" content="https://cirwel.github.io/">
   <link rel="canonical" href="https://cirwel.github.io/">
   <link rel="icon" href="assets/favicon-hex.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#F5F1E8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#15110D" media="(prefers-color-scheme: dark)">
+
+  <!-- Which impression to pull, settled before first paint so a reader who
+       asked for one never sees the other flash first. With no stored choice
+       nothing is set and the system preference decides, in CSS. -->
+  <script>
+    try {
+      var i = localStorage.getItem('cirwel-impression');
+      if (i === 'dark' || i === 'light') document.documentElement.setAttribute('data-theme', i);
+    } catch (e) {}
+    document.documentElement.className += ' js';
+  </script>
 
   <style>
     /* ---------------------------------------------------------------------
@@ -85,6 +98,19 @@
       size-adjust: 95.55%; ascent-override: 117.74%; descent-override: 41.86%; line-gap-override: 0%;
     }
 
+    /* ---------------------------------------------------------------------
+       TWO IMPRESSIONS OF ONE PLATE
+       Light is the house register: a copperplate line engraving pulled on laid
+       cream. Dark is not that inverted — it is the same plate pulled as a
+       MEZZOTINT, the intaglio process that works dark-to-light, grounding the
+       plate to print solid and burnishing the lights back out of it. Every
+       dark token holds the same contrast ratio against its ground that its
+       light counterpart holds against cream, which is what makes the two one
+       design rather than two.
+
+       Mirrored from cirwel-site's tailwind.config.mjs and global.css.
+       scripts/check-index.py leg E asserts every token there appears here.
+       --------------------------------------------------------------------- */
     :root {
       --cream:   #F5F1E8;
       --ink:     #1A1612;
@@ -92,12 +118,84 @@
       --ochre:   #B8862F;
       --stone:   #5C544A;
       --sepia:   #C9C0AE;
+
+      --grain-opacity: 0.04;
+      --grain-blend: multiply;
+      --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 0 0.04 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      --rule-soft: rgb(122 31 31 / 0.3);
+      --running-head-bg: rgb(245 241 232 / 0.94);
+      color-scheme: light;
+
       --measure: 40rem;
       --max:     72rem;
       --serif:   'EB Garamond Variable', 'Garamond Fallback', Georgia, serif;
       --display: 'Bodoni Moda Variable', 'Bodoni Fallback', Didot, Georgia, serif;
       --mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
     }
+
+    /* Applied twice: once for a reader whose system asks for dark, once for a
+       reader who asked this page directly. `:not([data-theme="light"])` lets an
+       explicit choice win over the system preference in both directions. */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+      --cream:   #15110D;  /* bistre-black ground */
+      --ink:     #E8E0D0;  /* burnished light */
+      --oxblood: #D0604A;  /* sanguine, lifted to 4.99:1 — #7A1F1F on this
+                              ground is 2:1 and a hairline in it disappears */
+      --ochre:   #D6A44A;
+      --stone:   #A89F90;  /* 7.3:1, as stone is on cream */
+      --sepia:   #3A3229;  /* 1.5:1, as sepia is on cream */
+
+      --grain-opacity: 0.05;
+      --grain-blend: screen;
+      /* On a mezzotint ground the tooth is what catches the light, so the
+         specks lighten rather than darken. */
+      --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.80 0 0 0 0 0.68 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      --rule-soft: rgb(208 96 74 / 0.35);
+      --running-head-bg: rgb(21 17 13 / 0.94);
+      color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --cream:   #15110D;  /* bistre-black ground */
+      --ink:     #E8E0D0;  /* burnished light */
+      --oxblood: #D0604A;  /* sanguine, lifted to 4.99:1 — #7A1F1F on this
+                              ground is 2:1 and a hairline in it disappears */
+      --ochre:   #D6A44A;
+      --stone:   #A89F90;  /* 7.3:1, as stone is on cream */
+      --sepia:   #3A3229;  /* 1.5:1, as sepia is on cream */
+
+      --grain-opacity: 0.05;
+      --grain-blend: screen;
+      /* On a mezzotint ground the tooth is what catches the light, so the
+         specks lighten rather than darken. */
+      --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.80 0 0 0 0 0.68 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      --rule-soft: rgb(208 96 74 / 0.35);
+      --running-head-bg: rgb(21 17 13 / 0.94);
+      color-scheme: dark;
+    }
+
+    /* ---------------------------------------------------------------------
+       RE-INKING THE ENGRAVINGS
+       Every ornament, seal and device on this page is inline SVG whose colours
+       are presentation ATTRIBUTES baked into the art. A CSS declaration
+       outranks a presentation attribute, so remapping the attribute values
+       re-inks every drawing at once and keeps the art single-source instead of
+       forking it into a second palette.
+       --------------------------------------------------------------------- */
+    [fill="#7A1F1F"]   { fill:   var(--oxblood); }
+    [stroke="#7A1F1F"] { stroke: var(--oxblood); }
+    [fill="#F5F1E8"]   { fill:   var(--cream); }
+    [stroke="#F5F1E8"] { stroke: var(--cream); }
+    [fill="#1A1612"]   { fill:   var(--ink); }
+    [stroke="#1A1612"] { stroke: var(--ink); }
+    [fill="#5C544A"]   { fill:   var(--stone); }
+    [stroke="#5C544A"] { stroke: var(--stone); }
+    [fill="#C9C0AE"]   { fill:   var(--sepia); }
+    [stroke="#C9C0AE"] { stroke: var(--sepia); }
+    [fill="#B8862F"]   { fill:   var(--ochre); }
+    [stroke="#B8862F"] { stroke: var(--ochre); }
 
     * { box-sizing: border-box; }
 
@@ -125,10 +223,10 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 0 0.04 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-      opacity: 0.04;
+      background-image: var(--grain);
+      opacity: var(--grain-opacity);
       z-index: 1000;
-      mix-blend-mode: multiply;
+      mix-blend-mode: var(--grain-blend);
     }
 
     .wrap { width: min(var(--max), calc(100% - 3rem)); margin: 0 auto; }
@@ -136,7 +234,7 @@
     a {
       color: inherit;
       text-decoration-line: underline;
-      text-decoration-color: rgba(122, 31, 31, 0.3);
+      text-decoration-color: var(--rule-soft);
       text-decoration-thickness: 1px;
       text-underline-offset: 0.22em;
       transition: text-decoration-color 0.2s ease;
@@ -169,7 +267,7 @@
     /* ---- masthead ---------------------------------------------------- */
     .masthead {
       position: sticky; top: 0; z-index: 20;
-      background: rgba(245, 241, 232, 0.94);
+      background: var(--running-head-bg);
       backdrop-filter: blur(8px);
       border-bottom: 1px solid var(--sepia);
     }
@@ -183,6 +281,24 @@
     .masthead nav { display: flex; gap: 1.4rem; }
     .masthead nav a { text-decoration: none; color: var(--stone); }
     .masthead nav a:hover { color: var(--oxblood); }
+    .wordmark .device { width: 22px; height: 22px; display: block; }
+    .wordmark .device svg { width: 100%; height: 100%; display: block; }
+
+    /* Apparatus, not a call to action: the control sits in the nav's own voice
+       and only earns colour on hover. Hidden without JS, where it could not do
+       anything. */
+    #impression {
+      display: none; align-items: center; gap: 0.42em;
+      background: none; border: 0; padding: 0; cursor: pointer;
+      color: var(--stone); line-height: 1;
+      /* the .label class on the element supplies the mono face; a `font:
+         inherit` here would outrank it by specificity and hand the control
+         the body serif. */
+    }
+    .js #impression { display: inline-flex; }
+    #impression:hover { color: var(--oxblood); }
+    #impression [data-impression-state] { min-width: 3.1em; text-align: left; }
+    #impression:focus-visible { outline: 2px solid var(--oxblood); outline-offset: 3px; }
 
     /* Running head. Derived from the section in view, so it cannot drift
        out of step with the section it names. */
@@ -320,7 +436,121 @@
   <div class="masthead">
     <div class="wrap masthead-inner">
       <a class="wordmark" href="#top">
-        <img src="assets/mark-c-illuminated.svg" alt="">
+        <!-- The device is inlined, not linked, so the tokens above re-ink it.
+             As an <img> it would keep its cream plate and sit as a lit tile on
+             a mezzotint ground. assets/mark-c-illuminated.svg stays the source
+             of the art and is what the favicon and share card use. -->
+        <span class="device" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <!-- Hand-cut engraving roughness — siblings logo-engraved.svg's filter -->
+    <filter id="engrave2" x="-5%" y="-5%" width="110%" height="110%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n"/>
+      <feDisplacementMap in="SourceGraphic" in2="n" scale="0.55"/>
+    </filter>
+
+    <!-- Cross-hatch for inside-letter shading (45° lines) -->
+    <pattern id="cHatch" patternUnits="userSpaceOnUse" width="3" height="3" patternTransform="rotate(45)">
+      <line x1="0" y1="0" x2="0" y2="3" stroke="#7A1F1F" stroke-width="0.45"/>
+    </pattern>
+
+    <!-- Counter-hatch for cross-hatching the deepest shadow region -->
+    <pattern id="cHatch2" patternUnits="userSpaceOnUse" width="3" height="3" patternTransform="rotate(-45)">
+      <line x1="0" y1="0" x2="0" y2="3" stroke="#7A1F1F" stroke-width="0.4"/>
+    </pattern>
+
+    <!-- The serif C, drawn as a path at center.
+         A wide stem that opens to the right, with terminal serifs.
+         Roughly: outer oval, cut by an inner oval, opening on the right. -->
+    <path id="serifC" d="
+      M 138 56
+      C 122 44, 102 40,  88 42
+      C 62 46,  44 70,   42 100
+      C 44 130, 62 154,  88 158
+      C 102 160, 122 156, 138 144
+      L 142 154
+      C 124 168, 100 172,  82 168
+      C 50 162,  30 132,  28 100
+      C 30 68,   50 38,   82 32
+      C 100 28, 124 32, 142 46
+      Z
+      M 134 70
+      C 122 60, 106 56, 92 60
+      C 72 64,  60 82,  58 100
+      C 60 118, 72 136, 92 140
+      C 106 144, 122 140, 134 130
+      L 130 122
+      C 120 130, 106 132, 96 130
+      C 80 126, 72 112, 70 100
+      C 72 88,  80 74, 96 70
+      C 106 68, 120 70, 130 78
+      Z
+    "/>
+  </defs>
+
+  <!-- Cream paper -->
+  <rect width="200" height="200" fill="#F5F1E8"/>
+
+  <!-- Whole device under engraving filter -->
+  <g filter="url(#engrave2)">
+
+    <!-- Outer cartouche frame: hairline rectangle with notched corners -->
+    <g stroke="#7A1F1F" fill="none">
+      <!-- Main rectangle -->
+      <rect x="20" y="20" width="160" height="160" stroke-width="1.4"/>
+      <!-- Inner double-line, classic engraved frame -->
+      <rect x="26" y="26" width="148" height="148" stroke-width="0.5"/>
+
+      <!-- Corner fleurons — small typographic ornaments at each corner -->
+      <g stroke-width="0.7">
+        <!-- TL fleuron: small four-petal cross -->
+        <line x1="20" y1="20" x2="32" y2="32"/>
+        <circle cx="22" cy="22" r="1.4" fill="#7A1F1F"/>
+        <!-- TR -->
+        <line x1="180" y1="20" x2="168" y2="32"/>
+        <circle cx="178" cy="22" r="1.4" fill="#7A1F1F"/>
+        <!-- BL -->
+        <line x1="20" y1="180" x2="32" y2="168"/>
+        <circle cx="22" cy="178" r="1.4" fill="#7A1F1F"/>
+        <!-- BR -->
+        <line x1="180" y1="180" x2="168" y2="168"/>
+        <circle cx="178" cy="178" r="1.4" fill="#7A1F1F"/>
+      </g>
+
+      <!-- Top ornamental swag — small flourish centered above the C -->
+      <g stroke-width="0.7" fill="none">
+        <path d="M 80 22 Q 100 14, 120 22"/>
+        <circle cx="100" cy="20" r="1.6" fill="#7A1F1F"/>
+        <line x1="92" y1="22" x2="86" y2="14"/>
+        <line x1="108" y1="22" x2="114" y2="14"/>
+      </g>
+
+      <!-- Bottom ornamental swag — mirror -->
+      <g stroke-width="0.7" fill="none">
+        <path d="M 80 178 Q 100 186, 120 178"/>
+        <circle cx="100" cy="180" r="1.6" fill="#7A1F1F"/>
+        <line x1="92" y1="178" x2="86" y2="186"/>
+        <line x1="108" y1="178" x2="114" y2="186"/>
+      </g>
+    </g>
+
+    <!-- Serif C, filled with cross-hatch (inside the letter body) -->
+    <use href="#serifC" fill="url(#cHatch)" />
+    <!-- Letter outline, stronger stroke -->
+    <use href="#serifC" fill="none" stroke="#7A1F1F" stroke-width="1.4" stroke-linejoin="round"/>
+
+    <!-- A small overlay of counter-hatch on the lower-left curve only,
+         giving the letter a sense of carved depth on its shadowed side -->
+    <clipPath id="cShadow">
+      <use href="#serifC"/>
+    </clipPath>
+    <g clip-path="url(#cShadow)">
+      <rect x="22" y="100" width="60" height="80" fill="url(#cHatch2)" opacity="0.6"/>
+    </g>
+
+    <!-- Tiny printer's-mark dot in the eye/aperture of the C, anchoring the device -->
+    <circle cx="100" cy="100" r="2.2" fill="#7A1F1F"/>
+  </g>
+</svg></span>
         <span class="display smcp name">CIRWEL</span>
         <span class="label" style="color:var(--stone)">Research&nbsp;Index</span>
       </a>
@@ -331,6 +561,25 @@
         <a class="label" href="#data">Data</a>
         <a class="label" href="#experiments">Experiments</a>
       </nav>
+      <!--
+        Impression control. The house register is a line engraving pulled on
+        cream; the dark register is the same plate pulled as a mezzotint. Which
+        one a reader gets is theirs to say, so it is stated rather than
+        inferred. Outside the nav on purpose: the nav is dropped below 860px
+        and the control is not.
+      -->
+      <button id="impression" type="button" class="label" aria-label="Impression: automatic">
+        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
+          <circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1"/>
+          <path d="M 8 1.4 A 6.6 6.6 0 0 1 8 14.6 Z" fill="currentColor"/>
+          <g stroke="currentColor" stroke-width="0.6" opacity="0.85">
+            <line x1="3.2" y1="5.4" x2="6.4" y2="5.4"/>
+            <line x1="2.2" y1="8" x2="6.4" y2="8"/>
+            <line x1="3.2" y1="10.6" x2="6.4" y2="10.6"/>
+          </g>
+        </svg>
+        <span data-impression-state>AUTO</span>
+      </button>
     </div>
   </div>
 
@@ -660,6 +909,48 @@
   </footer>
 
   <script>
+    /* Impression control. Three states, because two would force a reader to
+       choose one impression forever the moment they touched it: auto follows
+       the system, day and night override it. The label names the state, not
+       the action; the action is in the aria-label and the tooltip. */
+    (function () {
+      var btn = document.getElementById('impression');
+      if (!btn) return;
+      var text = btn.querySelector('[data-impression-state]');
+      var order = ['auto', 'day', 'night'];
+      var attr = { auto: null, day: 'light', night: 'dark' };
+      var says = {
+        auto:  'Impression follows your system. Change to day.',
+        day:   'Impression: day. Change to night.',
+        night: 'Impression: night. Change to automatic.'
+      };
+      var state = 'auto';
+      try {
+        var stored = localStorage.getItem('cirwel-impression');
+        if (stored === 'light') state = 'day';
+        else if (stored === 'dark') state = 'night';
+      } catch (e) {}
+
+      function apply() {
+        var v = attr[state];
+        if (v) document.documentElement.setAttribute('data-theme', v);
+        else document.documentElement.removeAttribute('data-theme');
+        if (text) text.textContent = state.toUpperCase();
+        btn.setAttribute('aria-label', says[state]);
+        btn.setAttribute('title', says[state]);
+        try {
+          if (v) localStorage.setItem('cirwel-impression', v);
+          else localStorage.removeItem('cirwel-impression');
+        } catch (e) {}
+      }
+
+      apply();
+      btn.addEventListener('click', function () {
+        state = order[(order.indexOf(state) + 1) % order.length];
+        apply();
+      });
+    })();
+
     /* Running head: takes its text from the section's own §NN label, so it
        cannot drift out of step with the section it names. */
     (function () {
