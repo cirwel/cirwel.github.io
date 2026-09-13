@@ -119,8 +119,7 @@
     :root {
       --cream:   #F5F1E8;
       --ink:     #1A1612;
-      --oxblood: #7A1F1F;  /* the ink */
-      --patina:  #7A1F1F;  /* the plate; on cream it IS the ink */
+      --oxblood: #7A1F1F;
       --ochre:   #B8862F;
       --stone:   #5C544A;
       --sepia:   #C9C0AE;
@@ -147,9 +146,9 @@
       --cream:   #15110D;  /* bistre-black ground */
       --ink:     #DBD2BF;  /* 12.5:1, DOWN from cream's 16:1 — light text
                               blooms, so parity here reads as glare */
-      --oxblood: #CB7A70;  /* the ink, 5.9:1, hue 7 not 13 — #7A1F1F on this
-                              ground is 2:1 and vanishes entirely */
-      --patina:  #7FAFA2;  /* the tarnished plate, 7.7:1 */
+      --oxblood: #CB7A70;  /* 5.9:1, hue 7 not the 13 that read as Halloween.
+                              #7A1F1F on this ground is 2:1 and vanishes. No
+                              gold token: it was pumpkin and carried no markup. */
       --stone:   #A89F90;  /* 7.2:1, near cream's 6.6:1 */
       --sepia:   #554A3C;  /* 2.2:1, UP from cream's 1.6:1 — a light hairline
                               on a dark ground reads thinner than the reverse */
@@ -169,9 +168,9 @@
       --cream:   #15110D;  /* bistre-black ground */
       --ink:     #DBD2BF;  /* 12.5:1, DOWN from cream's 16:1 — light text
                               blooms, so parity here reads as glare */
-      --oxblood: #CB7A70;  /* the ink, 5.9:1, hue 7 not 13 — #7A1F1F on this
-                              ground is 2:1 and vanishes entirely */
-      --patina:  #7FAFA2;  /* the tarnished plate, 7.7:1 */
+      --oxblood: #CB7A70;  /* 5.9:1, hue 7 not the 13 that read as Halloween.
+                              #7A1F1F on this ground is 2:1 and vanishes. No
+                              gold token: it was pumpkin and carried no markup. */
       --stone:   #A89F90;  /* 7.2:1, near cream's 6.6:1 */
       --sepia:   #554A3C;  /* 2.2:1, UP from cream's 1.6:1 — a light hairline
                               on a dark ground reads thinner than the reverse */
@@ -194,13 +193,8 @@
        re-inks every drawing at once and keeps the art single-source instead of
        forking it into a second palette.
        --------------------------------------------------------------------- */
-    [fill="#7A1F1F"]   { fill:   var(--patina); }
-    [stroke="#7A1F1F"] { stroke: var(--patina); }
-    /* The brand device is not apparatus. It is the mark itself, the same one
-       the favicon carries, and it stays in ink so the identity does not change
-       colour with the reader's system setting. */
-    .device [fill="#7A1F1F"]   { fill:   var(--oxblood); }
-    .device [stroke="#7A1F1F"] { stroke: var(--oxblood); }
+    [fill="#7A1F1F"]   { fill:   var(--oxblood); }
+    [stroke="#7A1F1F"] { stroke: var(--oxblood); }
     [fill="#F5F1E8"]   { fill:   var(--cream); }
     [stroke="#F5F1E8"] { stroke: var(--cream); }
     [fill="#1A1612"]   { fill:   var(--ink); }
