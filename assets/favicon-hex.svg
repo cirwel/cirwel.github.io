@@ -11,6 +11,20 @@
   Viewable at https://cirwel.org/favicon-hex.svg
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <!--
+    The tab mark follows the reader's system into the dark impression. Same
+    attribute remap the page uses, declared inside the file because a favicon
+    is loaded as an image and cannot be reached by the page's CSS.
+  -->
+  <style>
+    @media (prefers-color-scheme: dark) {
+      [fill="#F5F1E8"]   { fill:   #15110D; }
+      [fill="#7A1F1F"]   { fill:   #7FAFA2; }
+      [stroke="#7A1F1F"] { stroke: #7FAFA2; }
+      [fill="#C9C0AE"]   { fill:   #554A3C; }
+      [stroke="#C9C0AE"] { stroke: #554A3C; }
+    }
+  </style>
   <defs>
     <!-- Light hand-cut roughness — much more restrained than the 200x200 version
          to keep the silhouette legible at 16x16 -->
