@@ -12,11 +12,16 @@ The page is set in **Engraved Instrument**, the same house style as
 `#7A1F1F`, Bodoni Moda for display, EB Garamond for reading, JetBrains Mono for
 data. Hairline rules, no border-radius, no cards.
 
-**The rule: ornament must be load-bearing.** If a mark carries no information it
-does not ship. Here that means every entry is keyed to its own identifier — a
-DOI, a package name, a licence, a dataset path — the way a register keys a shelf
-mark, and the running head takes its text from the section's own `§NN` label so
-it cannot drift out of step with the section it names.
+The layout is a compact personal research index, distinct from the UNITARES
+presentation at cirwel.org. Kenny Wang's profile and contact links sit beside
+papers and preprints, followed by software and datasets. On mobile, the profile
+and section navigation stack above the entries. Publication and release links
+use concept DOIs so readers can reach current revisions.
+
+Shared typography and colors provide family resemblance; the index does not
+reuse the main site's product hero, decorative seals, or deployment statistics.
+The theme control supports automatic, day, and night modes, and the full index
+remains readable without JavaScript.
 
 The tokens in `index.html` are copied from `cirwel-site`'s
 `tailwind.config.mjs` and `src/styles/global.css`. It is hand-written CSS rather

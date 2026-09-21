@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kenny Wang — CIRWEL Research · Infrastructure for long-lived AI agents</title>
-  <meta name="description" content="Research, systems, datasets, and experiments from CIRWEL on infrastructure for long-lived AI agents.">
+  <title>Kenny Wang — Research index</title>
+  <meta name="description" content="Kenny Wang, independent researcher. Papers, open-source software, and datasets for long-lived AI agents.">
   <meta property="og:title" content="Kenny Wang — CIRWEL Research">
   <meta property="og:description" content="Infrastructure for long-lived AI agents. Research, systems, datasets, and experiments.">
   <meta property="og:type" content="website">
@@ -26,18 +26,7 @@
   </script>
 
   <style>
-    /* ---------------------------------------------------------------------
-       ENGRAVED INSTRUMENT — the house style of cirwel.org, ported to a
-       single static page. Same six colours, same three faces, same rule:
-       ornament must be load-bearing. If a mark carries no information it
-       does not ship.
-
-       This file is hand-written CSS rather than Tailwind because the repo
-       is served straight from GitHub Pages with no build step. The tokens
-       below are copied from cirwel-site's tailwind.config.mjs and
-       src/styles/global.css so the two surfaces cannot drift by accident.
-       --------------------------------------------------------------------- */
-
+    /* Shared CIRWEL palette and fonts, with an independent index layout. */
     /* Self-hosted, latin + latin-ext subsets only. No font CDN: the site
        must render identically with no third-party request. */
     @font-face {
@@ -187,739 +176,171 @@
       color-scheme: dark;
     }
 
-    /* ---------------------------------------------------------------------
-       RE-INKING THE ENGRAVINGS
-       Every ornament, seal and device on this page is inline SVG whose colours
-       are presentation ATTRIBUTES baked into the art. A CSS declaration
-       outranks a presentation attribute, so remapping the attribute values
-       re-inks every drawing at once and keeps the art single-source instead of
-       forking it into a second palette.
-       --------------------------------------------------------------------- */
-    [fill="#7A1F1F"]   { fill:   var(--oxblood); }
-    [stroke="#7A1F1F"] { stroke: var(--oxblood); }
-    [fill="#F5F1E8"]   { fill:   var(--cream); }
-    [stroke="#F5F1E8"] { stroke: var(--cream); }
-    [fill="#1A1612"]   { fill:   var(--ink); }
-    [stroke="#1A1612"] { stroke: var(--ink); }
-    [fill="#5C544A"]   { fill:   var(--stone); }
-    [stroke="#5C544A"] { stroke: var(--stone); }
-    [fill="#C9C0AE"]   { fill:   var(--sepia); }
-    [stroke="#C9C0AE"] { stroke: var(--sepia); }
-    [fill="#B8862F"]   { fill:   var(--ochre); }
-    [stroke="#B8862F"] { stroke: var(--ochre); }
 
     * { box-sizing: border-box; }
-
-    html {
-      font-size: 17px;
-      font-feature-settings: 'kern', 'liga', 'onum', 'pnum';
-      text-rendering: geometricPrecision;
-      -webkit-font-smoothing: antialiased;
-      scroll-behavior: smooth;
-      scroll-padding-top: 4rem;
+    html { scroll-padding-top: 2rem; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font: 20px/1.5 var(--serif); }
+    a { color: var(--oxblood); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 2px solid var(--oxblood); outline-offset: 5px; }
+    p, h1, h2, h3 { margin: 0; }
+    .shell { max-width: 1120px; margin: auto; padding: 0 40px; }
+    .masthead { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; border-bottom: 1px solid var(--sepia); }
+    .label, .meta, .profile-links, nav, .footer { font: 12px/1.8 var(--mono); }
+    .label { text-transform: uppercase; letter-spacing: .09em; color: var(--stone); }
+    #impression { display: none; color: var(--stone); background: transparent; border: 1px solid var(--sepia); padding: 8px 12px; cursor: pointer; font: 11px var(--mono); min-height: 44px; }
+    .js #impression { display: inline-block; }
+    .layout { display: grid; grid-template-columns: 245px minmax(0, 1fr); gap: 65px; padding: 54px 0 64px; }
+    .profile { align-self: start; position: sticky; top: 35px; }
+    h1 { font: 44px/1.1 var(--display); letter-spacing: -.035em; margin-bottom: 16px; }
+    .bio { color: var(--stone); font-size: 19px; }
+    .profile-links { display: flex; flex-direction: column; align-items: start; gap: 6px; margin: 24px 0; }
+    nav { display: flex; flex-direction: column; gap: 5px; padding-top: 20px; border-top: 1px solid var(--sepia); }
+    nav a { color: var(--stone); text-decoration: none; padding: 4px 0; }
+    .intro { font-size: 24px; line-height: 1.4; margin-bottom: 14px; }
+    .site-link { font-size: 17px; color: var(--stone); margin-bottom: 38px; }
+    section { margin-bottom: 38px; }
+    .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
+    h2 { font: 26px/1.2 var(--display); }
+    .meta { color: var(--stone); font-size: 10px; }
+    .entry { padding: 19px 0; border-bottom: 1px solid var(--sepia); }
+    h3 { font: 600 21px/1.3 var(--serif); }
+    .body { color: var(--stone); font-size: 18px; margin-top: 5px; }
+    .refs { font: 11px/1.8 var(--mono); margin-top: 8px; overflow-wrap: anywhere; }
+    .note { font-size: 17px; color: var(--stone); margin-top: 15px; }
+    .footer { border-top: 1px solid var(--sepia); padding: 20px 0 30px; color: var(--stone); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 10px; }
+    .skip { position: absolute; top: -100px; padding: 10px; background: var(--cream); z-index: 1; }
+    .skip:focus { top: 8px; }
+    @media (max-width: 760px) {
+      .shell { padding: 0 22px; }
+      .layout { grid-template-columns: 1fr; gap: 32px; padding-top: 32px; }
+      .profile { position: static; }
+      h1 { font-size: 42px; margin-bottom: 10px; }
+      .profile-links { flex-direction: row; flex-wrap: wrap; gap: 8px 18px; margin: 16px 0; }
+      nav { flex-direction: row; flex-wrap: wrap; gap: 20px; padding-top: 12px; }
+      .intro { font-size: 22px; }
+      .site-link { margin-bottom: 28px; }
     }
-
-    body {
-      margin: 0;
-      background: var(--cream);
-      color: var(--ink);
-      font-family: var(--serif);
-      line-height: 1.62;
-    }
-
-    /* Paper grain. Decorative, but it is the ground the whole register sits
-       on — the same overlay cirwel.org uses, at the same opacity. */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      background-image: var(--grain);
-      opacity: var(--grain-opacity);
-      z-index: 1000;
-      mix-blend-mode: var(--grain-blend);
-    }
-
-    .wrap { width: min(var(--max), calc(100% - 3rem)); margin: 0 auto; }
-
-    a {
-      color: inherit;
-      text-decoration-line: underline;
-      text-decoration-color: var(--rule-soft);
-      text-decoration-thickness: 1px;
-      text-underline-offset: 0.22em;
-      transition: text-decoration-color 0.2s ease;
-    }
-    a:hover { text-decoration-color: var(--oxblood); }
-
-    .display {
-      font-family: var(--display);
-      font-variation-settings: 'opsz' 96;
-      font-weight: 600;
-      letter-spacing: -0.015em;
-      line-height: 1.14;
-    }
-    /* At wordmark size Bodoni's hairlines vanish under opsz 96 — drop to the
-       small optical master, which thickens the thins. */
-    .display.smcp { font-variation-settings: 'opsz' 16; font-weight: 700; letter-spacing: 0.08em; }
-
-    .smcp { font-variant-caps: all-small-caps; font-variant-numeric: oldstyle-nums; letter-spacing: 0.06em; }
-
-    .label {
-      font-family: var(--mono);
-      font-size: 0.72rem;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      font-weight: 500;
-    }
-
-    hr.hairline { height: 1px; background: var(--sepia); border: 0; margin: 0; }
-
-    /* ---- masthead ---------------------------------------------------- */
-    .masthead {
-      position: sticky; top: 0; z-index: 20;
-      background: var(--running-head-bg);
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--sepia);
-    }
-    .masthead-inner {
-      min-height: 3.4rem;
-      display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
-    }
-    .wordmark { display: flex; align-items: center; gap: 0.6rem; text-decoration: none; }
-    .wordmark img { width: 22px; height: 22px; display: block; }
-    .wordmark .name { font-size: 1.02rem; }
-    .masthead nav { display: flex; gap: 1.4rem; }
-    .masthead nav a { text-decoration: none; color: var(--stone); }
-    .masthead nav a:hover { color: var(--oxblood); }
-    .wordmark .device { width: 22px; height: 22px; display: block; }
-    .wordmark .device svg { width: 100%; height: 100%; display: block; }
-
-    /* Apparatus, not a call to action: the control sits in the nav's own voice
-       and only earns colour on hover. Hidden without JS, where it could not do
-       anything. */
-    #impression {
-      display: none; align-items: center; gap: 0.42em;
-      background: none; border: 0; padding: 0; cursor: pointer;
-      color: var(--stone); line-height: 1;
-      /* the .label class on the element supplies the mono face; a `font:
-         inherit` here would outrank it by specificity and hand the control
-         the body serif. */
-    }
-    .js #impression { display: inline-flex; }
-    #impression:hover { color: var(--oxblood); }
-    #impression [data-impression-state] { min-width: 3.1em; text-align: left; }
-    #impression:focus-visible { outline: 2px solid var(--oxblood); outline-offset: 3px; }
-
-    /* Running head. Derived from the section in view, so it cannot drift
-       out of step with the section it names. */
-    #running-head {
-      color: var(--stone);
-      opacity: 0;
-      transition: opacity 0.25s ease;
-      white-space: nowrap;
-    }
-    #running-head.on { opacity: 1; }
-
-    /* ---- hero -------------------------------------------------------- */
-    .hero { padding: 5rem 0 3rem; }
-    .hero .eyebrow { color: var(--oxblood); margin: 0 0 1.6rem; }
-    h1 {
-      margin: 0 0 1.6rem;
-      max-width: 20ch;
-      font-size: clamp(2.7rem, 7vw, 5.4rem);
-    }
-    .lede { max-width: var(--measure); font-size: 1.24rem; margin: 0 0 1.1rem; }
-    .definition { max-width: var(--measure); color: var(--stone); margin: 0; }
-    .hero-links { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 1.4rem; }
-    .hero-links a { font-family: var(--mono); font-size: 0.8rem; }
-
-    /* ---- receipts ---------------------------------------------------- */
-    .receipts { padding: 2.5rem 0 3rem; }
-    .receipts dl {
-      display: grid;
-      grid-template-columns: 12rem 1fr;
-      gap: 1.1rem 2rem;
-      margin: 0;
-      align-items: baseline;
-    }
-    .receipts dt { color: var(--stone); }
-    .receipts dd { margin: 0; }
-    .receipts .aside { color: var(--stone); }
-
-    /* ---- sections ---------------------------------------------------- */
-    section { padding: 3.5rem 0 1rem; }
-    .sec {
-      display: grid;
-      grid-template-columns: 12rem 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-    .sec-gutter .label { color: var(--oxblood); display: block; }
-    .sec-gutter svg { margin-top: 1.6rem; }
-    .sec h2 { margin: 0 0 1.1rem; font-size: clamp(1.9rem, 4vw, 3rem); }
-    .sec-note { max-width: var(--measure); color: var(--stone); margin: 0 0 2.4rem; }
-
-    /* ---- entries ----------------------------------------------------- */
-    /* Not cards. A register keys each item to its identifier, and the
-       identifier is the only mark an entry earns: a DOI, a package name, a
-       licence, a dataset path. Everything else is prose. */
-    .entry { display: grid; grid-template-columns: 11rem 1fr; gap: 1.5rem; padding: 1.6rem 0; }
-    .entry + .entry { border-top: 1px solid var(--sepia); }
-    .shelf {
-      font-family: var(--mono);
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      color: var(--stone);
-      text-transform: uppercase;
-      display: block;
-      padding-top: 0.5rem;
-      word-break: break-word;
-    }
-    .shelf .doi { text-transform: none; letter-spacing: 0.02em; display: block; margin-top: 0.35rem; color: var(--ink); }
-    .entry h3 { margin: 0 0 0.15rem; font-size: 1.45rem; line-height: 1.2; }
-    .entry .role { margin: 0 0 0.7rem; color: var(--oxblood); font-style: italic; }
-    .entry p.body { margin: 0; max-width: var(--measure); }
-    .entry .refs { margin: 0.9rem 0 0; font-family: var(--mono); font-size: 0.76rem; color: var(--stone); }
-    .entry .refs a { color: var(--ink); }
-
-    /* ---- questions --------------------------------------------------- */
-    .questions { display: grid; gap: 1.4rem; max-width: 54rem; }
-    .question { display: grid; grid-template-columns: 13rem 1fr; gap: 1.5rem; padding-top: 1.4rem; border-top: 1px solid var(--sepia); }
-    .question .q { font-family: var(--display); font-variation-settings: 'opsz' 40; font-size: 1.08rem; }
-    .question p { margin: 0; color: var(--stone); max-width: var(--measure); }
-
-    /* ---- colophon ---------------------------------------------------- */
-    footer { padding: 3rem 0 4.5rem; }
-    .colophon { display: grid; grid-template-columns: 12rem 1fr; gap: 2rem; align-items: start; }
-    .colophon .mark { width: 80px; height: auto; opacity: 0.9; }
-    .colophon .who { margin: 0 0 0.9rem; }
-    .colophon .foot-links { margin: 0 0 1.6rem; font-family: var(--mono); font-size: 0.78rem; display: flex; flex-wrap: wrap; gap: 1.2rem; }
-    .caveat { max-width: 48rem; color: var(--stone); font-size: 0.92rem; margin: 0; }
-
-    .rule-orn { display: flex; align-items: center; gap: 1.2rem; }
-    .rule-orn hr { flex: 1; }
-
-    @media (max-width: 860px) {
-      .masthead nav { display: none; }
-      #running-head { display: none; }
-      .sec, .entry, .question, .colophon, .receipts dl { grid-template-columns: 1fr; gap: 0.8rem; }
-      .sec-gutter svg { display: none; }
-      .entry { padding: 1.4rem 0; }
-      .shelf { padding-top: 0; }
-      .receipts dl { gap: 0.2rem 0; }
-      .receipts dt { margin-top: 0.9rem; }
-      .hero { padding: 3rem 0 2rem; }
+    @media print {
+      .profile { position: static; }
+      #impression, nav, .skip { display: none !important; }
+      .layout { display: block; }
+      .profile { margin-bottom: 25px; }
+      .entry { break-inside: avoid; }
     }
   </style>
 </head>
 <body>
-
-  <!-- Ornament definitions, declared once and instanced by <use>. The
-       roughness filter is the same hand-cut turbulence the site's plates
-       and publisher's mark are drawn with. -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-    <defs>
-      <filter id="engrave" x="-6%" y="-6%" width="112%" height="112%">
-        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="11" result="n"/>
-        <feDisplacementMap in="SourceGraphic" in2="n" scale="0.45"/>
-      </filter>
-      <g id="scroll">
-        <path d="M 55 14 C 63 14, 66 8, 73 9 C 80 10, 83 16, 78 19 C 74.5 21.3, 70.5 18.7, 72 15"
-              fill="none" stroke="#7A1F1F" stroke-width="1.1" stroke-linecap="round"/>
-        <path d="M 62 12.4 C 62 8.6, 65 7, 68.5 7.8"
-              fill="none" stroke="#7A1F1F" stroke-width="0.9" stroke-linecap="round"/>
-        <circle cx="69.2" cy="7.6" r="1.15" fill="#7A1F1F"/>
-        <circle cx="74.2" cy="16.2" r="1.3" fill="#7A1F1F"/>
-      </g>
-      <g id="fleuron">
-        <g filter="url(#engrave)">
-          <polygon points="44.5,7.94 51.5,7.94 55,14 51.5,20.06 44.5,20.06 41,14"
-                   fill="none" stroke="#7A1F1F" stroke-width="1.2" stroke-linejoin="round"/>
-          <circle cx="48" cy="14" r="1.7" fill="#7A1F1F"/>
-          <use href="#scroll"/>
-          <use href="#scroll" transform="matrix(-1 0 0 1 96 0)"/>
-        </g>
-      </g>
-    </defs>
-  </svg>
-
-  <div class="masthead">
-    <div class="wrap masthead-inner">
-      <a class="wordmark" href="#top">
-        <!-- The device is inlined, not linked, so the tokens above re-ink it.
-             As an <img> it would keep its cream plate and sit as a lit tile on
-             a mezzotint ground. assets/mark-c-illuminated.svg stays the source
-             of the art and is what the favicon and share card use. -->
-        <span class="device" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
-  <defs>
-    <!-- Hand-cut engraving roughness — siblings logo-engraved.svg's filter -->
-    <filter id="engrave2" x="-5%" y="-5%" width="110%" height="110%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="7" result="n"/>
-      <feDisplacementMap in="SourceGraphic" in2="n" scale="0.55"/>
-    </filter>
-
-    <!-- Cross-hatch for inside-letter shading (45° lines) -->
-    <pattern id="cHatch" patternUnits="userSpaceOnUse" width="3" height="3" patternTransform="rotate(45)">
-      <line x1="0" y1="0" x2="0" y2="3" stroke="#7A1F1F" stroke-width="0.45"/>
-    </pattern>
-
-    <!-- Counter-hatch for cross-hatching the deepest shadow region -->
-    <pattern id="cHatch2" patternUnits="userSpaceOnUse" width="3" height="3" patternTransform="rotate(-45)">
-      <line x1="0" y1="0" x2="0" y2="3" stroke="#7A1F1F" stroke-width="0.4"/>
-    </pattern>
-
-    <!-- The serif C, drawn as a path at center.
-         A wide stem that opens to the right, with terminal serifs.
-         Roughly: outer oval, cut by an inner oval, opening on the right. -->
-    <path id="serifC" d="
-      M 138 56
-      C 122 44, 102 40,  88 42
-      C 62 46,  44 70,   42 100
-      C 44 130, 62 154,  88 158
-      C 102 160, 122 156, 138 144
-      L 142 154
-      C 124 168, 100 172,  82 168
-      C 50 162,  30 132,  28 100
-      C 30 68,   50 38,   82 32
-      C 100 28, 124 32, 142 46
-      Z
-      M 134 70
-      C 122 60, 106 56, 92 60
-      C 72 64,  60 82,  58 100
-      C 60 118, 72 136, 92 140
-      C 106 144, 122 140, 134 130
-      L 130 122
-      C 120 130, 106 132, 96 130
-      C 80 126, 72 112, 70 100
-      C 72 88,  80 74, 96 70
-      C 106 68, 120 70, 130 78
-      Z
-    "/>
-  </defs>
-
-  <!-- Cream paper -->
-  <rect width="200" height="200" fill="#F5F1E8"/>
-
-  <!-- Whole device under engraving filter -->
-  <g filter="url(#engrave2)">
-
-    <!-- Outer cartouche frame: hairline rectangle with notched corners -->
-    <g stroke="#7A1F1F" fill="none">
-      <!-- Main rectangle -->
-      <rect x="20" y="20" width="160" height="160" stroke-width="1.4"/>
-      <!-- Inner double-line, classic engraved frame -->
-      <rect x="26" y="26" width="148" height="148" stroke-width="0.5"/>
-
-      <!-- Corner fleurons — small typographic ornaments at each corner -->
-      <g stroke-width="0.7">
-        <!-- TL fleuron: small four-petal cross -->
-        <line x1="20" y1="20" x2="32" y2="32"/>
-        <circle cx="22" cy="22" r="1.4" fill="#7A1F1F"/>
-        <!-- TR -->
-        <line x1="180" y1="20" x2="168" y2="32"/>
-        <circle cx="178" cy="22" r="1.4" fill="#7A1F1F"/>
-        <!-- BL -->
-        <line x1="20" y1="180" x2="32" y2="168"/>
-        <circle cx="22" cy="178" r="1.4" fill="#7A1F1F"/>
-        <!-- BR -->
-        <line x1="180" y1="180" x2="168" y2="168"/>
-        <circle cx="178" cy="178" r="1.4" fill="#7A1F1F"/>
-      </g>
-
-      <!-- Top ornamental swag — small flourish centered above the C -->
-      <g stroke-width="0.7" fill="none">
-        <path d="M 80 22 Q 100 14, 120 22"/>
-        <circle cx="100" cy="20" r="1.6" fill="#7A1F1F"/>
-        <line x1="92" y1="22" x2="86" y2="14"/>
-        <line x1="108" y1="22" x2="114" y2="14"/>
-      </g>
-
-      <!-- Bottom ornamental swag — mirror -->
-      <g stroke-width="0.7" fill="none">
-        <path d="M 80 178 Q 100 186, 120 178"/>
-        <circle cx="100" cy="180" r="1.6" fill="#7A1F1F"/>
-        <line x1="92" y1="178" x2="86" y2="186"/>
-        <line x1="108" y1="178" x2="114" y2="186"/>
-      </g>
-    </g>
-
-    <!-- Serif C, filled with cross-hatch (inside the letter body) -->
-    <use href="#serifC" fill="url(#cHatch)" />
-    <!-- Letter outline, stronger stroke -->
-    <use href="#serifC" fill="none" stroke="#7A1F1F" stroke-width="1.4" stroke-linejoin="round"/>
-
-    <!-- A small overlay of counter-hatch on the lower-left curve only,
-         giving the letter a sense of carved depth on its shadowed side -->
-    <clipPath id="cShadow">
-      <use href="#serifC"/>
-    </clipPath>
-    <g clip-path="url(#cShadow)">
-      <rect x="22" y="100" width="60" height="80" fill="url(#cHatch2)" opacity="0.6"/>
-    </g>
-
-    <!-- Tiny printer's-mark dot in the eye/aperture of the C, anchoring the device -->
-    <circle cx="100" cy="100" r="2.2" fill="#7A1F1F"/>
-  </g>
-</svg></span>
-        <span class="display smcp name">CIRWEL</span>
-        <span class="label" style="color:var(--stone)">Research&nbsp;Index</span>
-      </a>
-      <span id="running-head" class="label"></span>
-      <nav aria-label="Index sections">
-        <a class="label" href="#systems">Systems</a>
-        <a class="label" href="#research">Research</a>
-        <a class="label" href="#data">Data</a>
-        <a class="label" href="#experiments">Experiments</a>
-      </nav>
-      <!--
-        Impression control. The house register is a line engraving pulled on
-        cream; the dark register is the same plate pulled as a mezzotint. Which
-        one a reader gets is theirs to say, so it is stated rather than
-        inferred. Outside the nav on purpose: the nav is dropped below 860px
-        and the control is not.
-      -->
-      <button id="impression" type="button" class="label" aria-label="Impression: automatic">
-        <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true">
-          <circle cx="8" cy="8" r="6.6" fill="none" stroke="currentColor" stroke-width="1"/>
-          <path d="M 8 1.4 A 6.6 6.6 0 0 1 8 14.6 Z" fill="currentColor"/>
-          <g stroke="currentColor" stroke-width="0.6" opacity="0.85">
-            <line x1="3.2" y1="5.4" x2="6.4" y2="5.4"/>
-            <line x1="2.2" y1="8" x2="6.4" y2="8"/>
-            <line x1="3.2" y1="10.6" x2="6.4" y2="10.6"/>
-          </g>
-        </svg>
-        <span data-impression-state>AUTO</span>
-      </button>
+  <a class="skip" href="#content">Skip to research</a>
+  <div class="shell">
+    <div class="masthead">
+      <span class="label">Personal research index</span>
+      <button id="impression" type="button" aria-label="Impression: automatic">Theme · <span data-impression-state>AUTO</span></button>
     </div>
-  </div>
-
-  <header class="hero wrap" id="top">
-    <p class="eyebrow label">Kenny Wang · Independent Researcher · sole operator, no staff</p>
-    <h1 class="display">Infrastructure for long-lived AI agents.</h1>
-    <p class="lede">
-      I build systems for agent work that spans sessions, restarts, and handoffs. The main project,
-      <span class="smcp">UNITARES</span>, is accountability infrastructure for long-running AI agents:
-      who did what, what evidence backed it, who reviewed it, and what happened next, kept across
-      those boundaries.
-    </p>
-    <p class="definition">
-      <em>Long-lived</em> describes continuity of the work and its accountable record — not a claim that
-      one process runs forever. <span class="smcp">UNITARES</span> sits alongside model providers and
-      agent frameworks rather than replacing them.
-    </p>
-    <p class="hero-links">
-      <a href="https://cirwel.org">cirwel.org</a>
-      <a href="https://github.com/CIRWEL/unitares">UNITARES</a>
-      <a href="https://github.com/CIRWEL">GitHub</a>
-      <a href="https://huggingface.co/hikewa">Hugging Face</a>
-      <a href="mailto:founder@cirwel.org">founder@cirwel.org</a>
-    </p>
-  </header>
-
-  <div class="wrap"><hr class="hairline"></div>
-
-  <div class="receipts wrap">
-    <dl>
-      <dt class="label">In use since</dt>
-      <dd>November 2025 <span class="aside">· continuous operation</span></dd>
-      <dt class="label">Licence</dt>
-      <dd>Apache-2.0 <span class="aside">· server, SDK, adapters, reproduction kits</span></dd>
-      <dt class="label">Published</dt>
-      <dd>Four papers and preprints <span class="aside">· all deposited, all citable</span></dd>
-      <dt class="label">Evidence base</dt>
-      <dd>CIRWEL's own production fleet <span class="aside">· self-traffic, not external adoption</span></dd>
-    </dl>
-  </div>
-
-  <div class="wrap rule-orn">
-    <hr class="hairline">
-    <svg viewBox="0 0 96 28" width="92" height="27" aria-hidden="true" focusable="false"><use href="#fleuron"/></svg>
-    <hr class="hairline">
-  </div>
-
-  <main>
-
-    <section id="systems" class="wrap">
-      <div class="sec">
-        <div class="sec-gutter">
-          <span class="label">§01 — Systems</span>
-          <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false">
-            <g filter="url(#engrave)">
-              <circle cx="32" cy="32" r="29" fill="none" stroke="#7A1F1F" stroke-width="1.3"/>
-              <circle cx="32" cy="32" r="24.5" fill="none" stroke="#7A1F1F" stroke-width="0.5"/>
-              <g stroke="#7A1F1F" stroke-width="0.8">
-                <line x1="1.5" y1="32" x2="7.5" y2="32"/><line x1="56.5" y1="32" x2="62.5" y2="32"/>
-              </g>
-              <circle cx="32" cy="6.5" r="1.25" fill="#7A1F1F"/><circle cx="32" cy="57.5" r="1.25" fill="#7A1F1F"/>
-            </g>
-            <text x="32" y="40.5" text-anchor="middle" font-family="'Bodoni Moda Variable', Didot, Georgia, serif"
-                  font-size="21" font-weight="600" letter-spacing="1.5" fill="#7A1F1F"
-                  style="font-variation-settings:'opsz' 40">I</text>
-          </svg>
+    <div class="layout">
+      <header class="profile">
+        <h1>Kenny Wang</h1>
+        <p class="bio">Independent researcher.<br>Founder, CIRWEL Systems.</p>
+        <div class="profile-links">
+          <a href="https://orcid.org/0009-0006-7544-2374">ORCID</a>
+          <a href="https://github.com/CIRWEL">GitHub</a>
+          <a href="https://huggingface.co/hikewa">Hugging Face</a>
+          <a href="mailto:founder@cirwel.org">Email</a>
         </div>
-        <div>
-          <h2 class="display">The runtime stack.</h2>
-          <p class="sec-note">UNITARES is the shared substrate; the surrounding projects exercise different parts of it. Each entry is keyed to the identifier it is distributed under.</p>
-
-          <article class="entry">
-            <div><span class="shelf">Apache-2.0<span class="doi">unitares-sdk</span><span class="doi">10.5281/zenodo.20320440</span></span></div>
+        <nav aria-label="Research index">
+          <a href="#research">Papers &amp; preprints</a>
+          <a href="#systems">Software</a>
+          <a href="#data">Datasets &amp; reproduction</a>
+        </nav>
+      </header>
+      <main id="content">
+        <p class="intro">I study how AI agent work stays attributable, reviewable, and recoverable across sessions, restarts, and handoffs.</p>
+        <p class="site-link">This is an index of my work. For UNITARES and how to run it, visit <a href="https://cirwel.org">cirwel.org ↗</a>.</p>
+<section id="research" aria-labelledby="research-heading">
+<div class="section-head"><h2 id="research-heading">Papers &amp; preprints</h2><span class="meta">Four papers and preprints</span></div>
+<article class="entry">
             <div>
-              <h3 class="display">UNITARES</h3>
-              <p class="role">Infrastructure for long-lived agents</p>
-              <p class="body">Self-hosted infrastructure for identity, evidence, memory, longitudinal state, review, policy, recovery, leases, handoffs, and coordination. Exposes MCP, REST, an SDK, and operator surfaces.</p>
-              <p class="refs"><a href="https://github.com/CIRWEL/unitares">Repository</a> · <a href="https://doi.org/10.5281/zenodo.19647159">Paper</a> · <a href="https://pypi.org/project/unitares-sdk/">PyPI</a> · <a href="https://doi.org/10.5281/zenodo.20320440">Archived release</a></p>
-            </div>
-          </article>
-
-          <article class="entry">
-            <div><span class="shelf">Deployed<span class="doi">anima-mcp</span></span></div>
-            <div>
-              <h3 class="display">Anima</h3>
-              <p class="role">Physical longitudinal testbed</p>
-              <p class="body">A Raspberry Pi sensor system used to test longitudinal telemetry, continuity, and state-estimation machinery against a physically situated process. Its traces support the digital-proprioception work and the published datasets.</p>
-              <p class="refs"><a href="https://github.com/CIRWEL/anima-mcp">Repository</a></p>
-            </div>
-          </article>
-
-          <article class="entry">
-            <div><span class="shelf">Userland<span class="doi">unitares-resident</span></span></div>
-            <div>
-              <h3 class="display">UNITARES Resident</h3>
-              <p class="role">Optional first-party agent userland</p>
-              <p class="body">Conversation loops, provider adapters, tools, scheduling, and queues built on the public UNITARES contract. The resident is optional; a custom runtime can use the SDK directly.</p>
-              <p class="refs"><a href="https://github.com/CIRWEL/unitares-resident">Repository</a></p>
-            </div>
-          </article>
-
-          <article class="entry">
-            <div><span class="shelf">Integration<span class="doi">host-adapter · plugin</span></span></div>
-            <div>
-              <h3 class="display">Host adapters &amp; plugin</h3>
-              <p class="role">Connect existing agent harnesses</p>
-              <p class="body">Thin integrations that connect Claude Code, Codex, Hermes, and other hosts to UNITARES check-ins, review, memory, and policy surfaces without moving the agent loop into Core.</p>
-              <p class="refs"><a href="https://github.com/CIRWEL/unitares-host-adapter">Host adapter</a> · <a href="https://github.com/CIRWEL/unitares-governance-plugin">Plugin</a></p>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <div class="wrap rule-orn">
-      <hr class="hairline">
-      <svg viewBox="0 0 96 28" width="92" height="27" aria-hidden="true" focusable="false"><use href="#fleuron"/></svg>
-      <hr class="hairline">
-    </div>
-
-    <section id="research" class="wrap">
-      <div class="sec">
-        <div class="sec-gutter">
-          <span class="label">§02 — Research</span>
-          <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false">
-            <g filter="url(#engrave)">
-              <circle cx="32" cy="32" r="29" fill="none" stroke="#7A1F1F" stroke-width="1.3"/>
-              <circle cx="32" cy="32" r="24.5" fill="none" stroke="#7A1F1F" stroke-width="0.5"/>
-              <g stroke="#7A1F1F" stroke-width="0.8">
-                <line x1="1.5" y1="32" x2="7.5" y2="32"/><line x1="56.5" y1="32" x2="62.5" y2="32"/>
-              </g>
-              <circle cx="32" cy="6.5" r="1.25" fill="#7A1F1F"/><circle cx="32" cy="57.5" r="1.25" fill="#7A1F1F"/>
-            </g>
-            <text x="32" y="40.5" text-anchor="middle" font-family="'Bodoni Moda Variable', Didot, Georgia, serif"
-                  font-size="21" font-weight="600" letter-spacing="1.5" fill="#7A1F1F"
-                  style="font-variation-settings:'opsz' 40">II</text>
-          </svg>
-        </div>
-        <div>
-          <h2 class="display">The work underneath.</h2>
-          <p class="sec-note">Research claims are kept separate from product assumptions. Every deposit below is public and citable; the DOI is the shelf mark.</p>
-
-          <article class="entry">
-            <div><span class="shelf">Paper<span class="doi">10.5281/zenodo.19647159</span></span></div>
-            <div>
-              <h3 class="display">UNITARES</h3>
-              <p class="role">Information-Theoretic Governance of Heterogeneous Agent Fleets</p>
+              <h3>UNITARES: Information-Theoretic Governance of Heterogeneous Agent Fleets</h3>
               <p class="body">The framework paper for runtime state estimation, calibration, governance, and the production measurements behind the deployed system.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.19647159">Zenodo</a> · <a href="https://github.com/CIRWEL/unitares-paper-v6">Source</a></p>
             </div>
           </article>
-
-          <article class="entry">
-            <div><span class="shelf">Preprint<span class="doi">10.5281/zenodo.20098168</span></span></div>
+<article class="entry">
             <div>
-              <h3 class="display">Trajectory Identity</h3>
-              <p class="role">Identity across transient process boundaries</p>
+              <h3>Trajectory Identity</h3>
               <p class="body">Treats identity as a longitudinal trajectory rather than a reused label or a single process instance, with early multi-agent discrimination work.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.20098168">Zenodo</a> · <a href="https://github.com/CIRWEL/trajectory-identity-paper">Source</a></p>
             </div>
           </article>
-
-          <article class="entry">
-            <div><span class="shelf">Preprint<span class="doi">10.5281/zenodo.21930092</span></span></div>
+<article class="entry">
             <div>
-              <h3 class="display">Digital Proprioception &amp; Allostatic Load</h3>
-              <p class="role">Operational self-sensing in a deployed synthetic system</p>
+              <h3>Digital Proprioception &amp; Allostatic Load</h3>
               <p class="body">Tests whether ideas from allostatic load and proprioception remain useful when translated into measured, non-biological runtime signals.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.21930092">Zenodo</a> · <a href="https://github.com/CIRWEL/digital-proprioception-paper">Source</a></p>
             </div>
           </article>
-
-          <article class="entry">
-            <div><span class="shelf">Preprint<span class="doi">10.5281/zenodo.21930161</span></span></div>
+<article class="entry">
             <div>
-              <h3 class="display">Accountability Without a Trusted Center</h3>
-              <p class="role">Federated governance for principals who share no root of trust</p>
+              <h3>Accountability Without a Trusted Center</h3>
               <p class="body">Design and pre-registered evaluation plan for a testbed where each principal runs its own governance instance and cross-principal interaction is mediated by verifiable attestation rather than a central authority. The benchmark measures the price of decentralization rather than assuming it.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.21930161">Zenodo</a></p>
             </div>
           </article>
-
-          <article class="entry">
-            <div><span class="shelf">Open<span class="doi">cirwel.org/research</span></span></div>
+<p class="note">Prediction and intervention benefit remain open questions. <a href="https://cirwel.org/research">Results, caveats, and the research record ↗</a></p>
+</section>
+<section id="systems" aria-labelledby="systems-heading">
+<div class="section-head"><h2 id="systems-heading">Software</h2><span class="meta">Repositories &amp; releases</span></div>
+<article class="entry">
             <div>
-              <h3 class="display">The research record</h3>
-              <p class="role">Failures, caveats, and open questions</p>
-              <p class="body">The programme separates discrimination, prediction, and intervention. Negative and inconclusive results stay visible rather than being folded into a single success claim.</p>
-              <p class="refs"><a href="https://cirwel.org/research">Research page</a></p>
+              <h3>UNITARES</h3>
+              <p class="body">Self-hosted infrastructure for identity, evidence, memory, longitudinal state, review, policy, recovery, leases, handoffs, and coordination. Exposes MCP, REST, an SDK, and operator surfaces.</p>
+              <p class="refs"><a href="https://github.com/CIRWEL/unitares">Repository</a> · <a href="https://doi.org/10.5281/zenodo.19647159">Paper</a> · <a href="https://pypi.org/project/unitares-sdk/">PyPI</a> · <a href="https://doi.org/10.5281/zenodo.20320440">Archived release</a></p>
             </div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <div class="wrap rule-orn">
-      <hr class="hairline">
-      <svg viewBox="0 0 96 28" width="92" height="27" aria-hidden="true" focusable="false"><use href="#fleuron"/></svg>
-      <hr class="hairline">
-    </div>
-
-    <section id="data" class="wrap">
-      <div class="sec">
-        <div class="sec-gutter">
-          <span class="label">§03 — Data</span>
-          <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false">
-            <g filter="url(#engrave)">
-              <circle cx="32" cy="32" r="29" fill="none" stroke="#7A1F1F" stroke-width="1.3"/>
-              <circle cx="32" cy="32" r="24.5" fill="none" stroke="#7A1F1F" stroke-width="0.5"/>
-              <g stroke="#7A1F1F" stroke-width="0.8">
-                <line x1="1.5" y1="32" x2="7.5" y2="32"/><line x1="56.5" y1="32" x2="62.5" y2="32"/>
-              </g>
-              <circle cx="32" cy="6.5" r="1.25" fill="#7A1F1F"/><circle cx="32" cy="57.5" r="1.25" fill="#7A1F1F"/>
-            </g>
-            <text x="32" y="40.5" text-anchor="middle" font-family="'Bodoni Moda Variable', Didot, Georgia, serif"
-                  font-size="21" font-weight="600" letter-spacing="0.5" fill="#7A1F1F"
-                  style="font-variation-settings:'opsz' 40">III</text>
-          </svg>
-        </div>
-        <div>
-          <h2 class="display">Data &amp; reproduction.</h2>
-          <p class="sec-note">Published telemetry corpora and reproduction kits. Dataset scale is evidence of instrumentation, not of external adoption.</p>
-
-          <article class="entry">
-            <div><span class="shelf">Dataset<span class="doi">hikewa/unitares-eisv-trajectories</span></span></div>
+<article class="entry">
             <div>
-              <h3 class="display">EISV Trajectories</h3>
-              <p class="role">Labeled longitudinal windows</p>
+              <h3>Anima</h3>
+              <p class="body">A Raspberry Pi sensor system used to test longitudinal telemetry, continuity, and state-estimation machinery against a physically situated process. Its traces support the digital-proprioception work and the published datasets.</p>
+              <p class="refs"><a href="https://github.com/CIRWEL/anima-mcp">Repository</a></p>
+            </div>
+          </article>
+<article class="entry">
+            <div>
+              <h3>UNITARES Resident</h3>
+              <p class="body">Conversation loops, provider adapters, tools, scheduling, and queues built on the public UNITARES contract. The resident is optional; a custom runtime can use the SDK directly.</p>
+              <p class="refs"><a href="https://github.com/CIRWEL/unitares-resident">Repository</a></p>
+            </div>
+          </article>
+<article class="entry">
+            <div>
+              <h3>Host adapters &amp; plugin</h3>
+              <p class="body">Thin integrations that connect Claude Code, Codex, Hermes, and other hosts to UNITARES check-ins, review, memory, and policy surfaces without moving the agent loop into Core.</p>
+              <p class="refs"><a href="https://github.com/CIRWEL/unitares-host-adapter">Host adapter</a> · <a href="https://github.com/CIRWEL/unitares-governance-plugin">Plugin</a></p>
+            </div>
+          </article>
+</section>
+<section id="data" aria-labelledby="data-heading">
+<div class="section-head"><h2 id="data-heading">Datasets &amp; reproduction</h2><span class="meta">Open research materials</span></div>
+<article class="entry">
+            <div>
+              <h3>EISV Trajectories</h3>
               <p class="body">32,181 labeled trajectory windows: 20,655 overlapping real windows from the embedded deployment, plus 11,526 synthetic examples across nine shape classes.</p>
               <p class="refs"><a href="https://huggingface.co/datasets/hikewa/unitares-eisv-trajectories">Hugging Face</a> · <a href="https://github.com/CIRWEL/eisv-lumen">Source</a></p>
             </div>
           </article>
-
-          <article class="entry">
-            <div><span class="shelf">Repro kit<span class="doi">hikewa/unitares-verdict-counterfactual-v6.8</span><span class="doi">10.5281/zenodo.19705150</span></span></div>
+<article class="entry">
             <div>
-              <h3 class="display">Verdict Counterfactual Kit</h3>
-              <p class="role">Reproduce the v6 counterfactual analysis</p>
+              <h3>Verdict Counterfactual Kit</h3>
               <p class="body">Data and scripts for replaying how governance decisions change under alternative baseline and input assumptions.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.19705150">Zenodo</a> · <a href="https://huggingface.co/datasets/hikewa/unitares-verdict-counterfactual-v6.8">Hugging Face</a> · <a href="https://github.com/CIRWEL/unitares-repro-v6">Source</a></p>
             </div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <div class="wrap rule-orn">
-      <hr class="hairline">
-      <svg viewBox="0 0 96 28" width="92" height="27" aria-hidden="true" focusable="false"><use href="#fleuron"/></svg>
-      <hr class="hairline">
+</section>
+<p class="note" id="experiments">CIRWEL is an independent, single-operator research programme. Deployment evidence comes from my own environment; it does not establish external adoption or cross-operator generality.</p>
+      </main>
     </div>
-
-    <section id="experiments" class="wrap">
-      <div class="sec">
-        <div class="sec-gutter">
-          <span class="label">§04 — Experiments</span>
-          <svg viewBox="0 0 64 64" width="56" height="56" aria-hidden="true" focusable="false">
-            <g filter="url(#engrave)">
-              <circle cx="32" cy="32" r="29" fill="none" stroke="#7A1F1F" stroke-width="1.3"/>
-              <circle cx="32" cy="32" r="24.5" fill="none" stroke="#7A1F1F" stroke-width="0.5"/>
-              <g stroke="#7A1F1F" stroke-width="0.8">
-                <line x1="1.5" y1="32" x2="7.5" y2="32"/><line x1="56.5" y1="32" x2="62.5" y2="32"/>
-              </g>
-              <circle cx="32" cy="6.5" r="1.25" fill="#7A1F1F"/><circle cx="32" cy="57.5" r="1.25" fill="#7A1F1F"/>
-            </g>
-            <text x="32" y="40.5" text-anchor="middle" font-family="'Bodoni Moda Variable', Didot, Georgia, serif"
-                  font-size="21" font-weight="600" letter-spacing="0.5" fill="#7A1F1F"
-                  style="font-variation-settings:'opsz' 40">IV</text>
-          </svg>
-        </div>
-        <div>
-          <h2 class="display">What is actually being asked.</h2>
-          <p class="sec-note">The stack is also a research apparatus. These questions matter more than raw event volume — and two of the three are not settled.</p>
-
-          <div class="questions">
-            <div class="question">
-              <div class="q">Can runtime state discriminate?</div>
-              <p>Do recorded operational patterns meaningfully differ across agents or workload classes?</p>
-            </div>
-            <div class="question">
-              <div class="q">Can it predict?</div>
-              <p>Does prior state anticipate meaningful outcomes better than simpler baselines? This remains unresolved.</p>
-            </div>
-            <div class="question">
-              <div class="q">Does acting on it help?</div>
-              <p>Intervention benefit is not established. External or adversarial evaluation is still needed.</p>
-            </div>
-            <div class="question">
-              <div class="q">Dogfood</div>
-              <p>UNITARES is used in the development of UNITARES, through attributed memory, advisory consultation, review, check-ins, and handoffs.</p>
-            </div>
-            <div class="question">
-              <div class="q">Authority separation</div>
-              <p>Consultation and review add evidence; they do not automatically become decision authority.</p>
-            </div>
-            <div class="question">
-              <div class="q">Single-operator disclosure</div>
-              <p>The production deployment demonstrates sustained use of the mechanisms in one environment, not cross-operator generality.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <div class="wrap rule-orn" style="margin-top:3.5rem">
-    <hr class="hairline">
-    <svg viewBox="0 0 96 28" width="92" height="27" aria-hidden="true" focusable="false"><use href="#fleuron"/></svg>
-    <hr class="hairline">
+    <footer class="footer"><span>Kenny Wang · CIRWEL Systems</span><a href="https://cirwel.org">UNITARES at cirwel.org ↗</a></footer>
   </div>
-
-  <footer class="wrap">
-    <div class="colophon">
-      <div><img class="mark" src="assets/logo-engraved.svg" width="80" height="80" alt="CIRWEL Research publisher's device"></div>
-      <div>
-        <p class="who"><span class="smcp">Kenny Wang</span> · Independent Researcher · Founder, CIRWEL Systems<br>
-          <span style="color:var(--stone)">ORCID <a href="https://orcid.org/0009-0006-7544-2374" style="font-family:var(--mono);font-size:0.85rem">0009-0006-7544-2374</a></span></p>
-        <p class="foot-links">
-          <a href="https://cirwel.org">cirwel.org</a>
-          <a href="https://github.com/CIRWEL">GitHub</a>
-          <a href="https://huggingface.co/hikewa">Hugging Face</a>
-          <a href="mailto:founder@cirwel.org">founder@cirwel.org</a>
-        </p>
-        <p class="caveat">CIRWEL is an independent, single-operator research programme. Production counters and deployment duration describe CIRWEL's own development environment unless explicitly stated otherwise. They are not evidence of external adoption, preventive safety benefit, or cross-operator generality.</p>
-      </div>
-    </div>
-  </footer>
-
   <script>
     /* Impression control. Three states, because two would force a reader to
        choose one impression forever the moment they touched it: auto follows
@@ -963,26 +384,6 @@
       });
     })();
 
-    /* Running head: takes its text from the section's own §NN label, so it
-       cannot drift out of step with the section it names. */
-    (function () {
-      var head = document.getElementById('running-head');
-      if (!head || !('IntersectionObserver' in window)) return;
-      var sections = [].slice.call(document.querySelectorAll('main section'));
-      var seen = {};
-      var io = new IntersectionObserver(function (entries) {
-        entries.forEach(function (e) { seen[e.target.id] = e.isIntersecting; });
-        var inView = sections.filter(function (s) { return seen[s.id]; });
-        // the LAST section touching the band is the one being read; the
-        // first is the one whose tail is still leaving it.
-        var current = inView[inView.length - 1];
-        if (!current) { head.classList.remove('on'); return; }
-        var label = current.querySelector('.label');
-        head.textContent = label ? label.textContent : '';
-        head.classList.add('on');
-      }, { rootMargin: '-58px 0px -70% 0px' });
-      sections.forEach(function (s) { io.observe(s); });
-    })();
   </script>
 </body>
 </html>
