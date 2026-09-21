@@ -13,9 +13,11 @@ The page is set in **Engraved Instrument**, the same house style as
 data. Hairline rules, no border-radius, no cards.
 
 The layout is a compact personal research index, distinct from the UNITARES
-presentation at cirwel.org. Kenny Wang's profile and contact links sit beside
-papers and preprints, followed by software and datasets. On mobile, the profile
-and section navigation stack above the entries. Publication and release links
+presentation at cirwel.org. An asymmetric typographic nameplate introduces
+Kenny Wang; numbered bibliography entries pair readable titles and abstracts
+with factual margin notes about publication type and subject. Papers come first,
+followed by software and datasets. On mobile, margin notes move below their
+entries and contact links sit beside the short biography. Publication and release links
 use concept DOIs so readers can reach current revisions.
 
 Shared typography and colors provide family resemblance; the index does not
