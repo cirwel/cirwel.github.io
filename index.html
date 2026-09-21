@@ -179,54 +179,80 @@
 
     * { box-sizing: border-box; }
     html { scroll-padding-top: 2rem; }
-    body { margin: 0; background: var(--cream); color: var(--ink); font: 20px/1.5 var(--serif); }
-    a { color: var(--oxblood); text-decoration-thickness: 1px; text-underline-offset: .18em; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font: 20px/1.45 var(--serif); }
+    ::selection { background: var(--oxblood); color: var(--cream); }
+    a { color: var(--oxblood); text-decoration-thickness: 1px; text-underline-offset: .2em; }
     a:hover { text-decoration-thickness: 2px; }
     :focus-visible { outline: 2px solid var(--oxblood); outline-offset: 5px; }
     p, h1, h2, h3 { margin: 0; }
-    .shell { max-width: 1120px; margin: auto; padding: 0 40px; }
-    .masthead { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; border-bottom: 1px solid var(--sepia); }
-    .label, .meta, .profile-links, nav, .footer { font: 12px/1.8 var(--mono); }
-    .label { text-transform: uppercase; letter-spacing: .09em; color: var(--stone); }
-    #impression { display: none; color: var(--stone); background: transparent; border: 1px solid var(--sepia); padding: 8px 12px; cursor: pointer; font: 11px var(--mono); min-height: 44px; }
+    .shell { max-width: 1200px; margin: auto; padding: 0 50px; }
+    .masthead { display: flex; justify-content: space-between; align-items: center; padding: 19px 0; border-bottom: 1px solid var(--ink); }
+    .label, .meta, .profile-links, nav, .footer, .margin-note, .refs { font: 11px/1.7 var(--mono); }
+    .label { color: var(--stone); }
+    #impression { display: none; color: var(--stone); background: transparent; border: 0; padding: 8px 0 8px 12px; cursor: pointer; font: 10px var(--mono); min-height: 44px; }
     .js #impression { display: inline-block; }
-    .layout { display: grid; grid-template-columns: 245px minmax(0, 1fr); gap: 65px; padding: 54px 0 64px; }
-    .profile { align-self: start; position: sticky; top: 35px; }
-    h1 { font: 44px/1.1 var(--display); letter-spacing: -.035em; margin-bottom: 16px; }
-    .bio { color: var(--stone); font-size: 19px; }
-    .profile-links { display: flex; flex-direction: column; align-items: start; gap: 6px; margin: 24px 0; }
-    nav { display: flex; flex-direction: column; gap: 5px; padding-top: 20px; border-top: 1px solid var(--sepia); }
-    nav a { color: var(--stone); text-decoration: none; padding: 4px 0; }
-    .intro { font-size: 24px; line-height: 1.4; margin-bottom: 14px; }
-    .site-link { font-size: 17px; color: var(--stone); margin-bottom: 38px; }
-    section { margin-bottom: 38px; }
-    .section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
-    h2 { font: 26px/1.2 var(--display); }
+    .profile { display: grid; grid-template-columns: 1.5fr 1fr; gap: 25px 70px; align-items: end; padding: 46px 0 0; }
+    h1 { font: 400 clamp(70px, 10vw, 136px)/.88 var(--display); letter-spacing: -.055em; }
+    h1 span { display: block; }
+    h1 .surname { margin-left: .65em; font-family: var(--serif); font-style: italic; font-size: 1.15em; font-weight: 400; }
+    .profile-detail { padding-bottom: 6px; }
+    .bio { font-size: 18px; color: var(--stone); padding-left: 16px; border-left: 2px solid var(--oxblood); }
+    .profile-links { display: flex; flex-wrap: wrap; gap: 7px 20px; margin-top: 24px; }
+    nav { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 12px 38px; margin-top: 20px; padding: 16px 0; border-top: 1px solid var(--sepia); border-bottom: 1px solid var(--sepia); }
+    nav a { color: var(--ink); text-decoration: none; padding: 4px 0; }
+    nav a span { color: var(--oxblood); margin-right: 9px; }
+    .opening { display: grid; grid-template-columns: 1.5fr 1fr; gap: 70px; padding: 30px 0 44px; }
+    .intro { font-size: 25px; line-height: 1.3; max-width: 32ch; }
+    .site-link { font-size: 17px; color: var(--stone); max-width: 32ch; padding-top: 3px; }
+    section { margin-bottom: 54px; counter-reset: entry; }
+    .section-head { display: grid; grid-template-columns: 1fr 200px; gap: 24px; align-items: baseline; padding: 15px 0; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--sepia); }
+    h2 { font: 400 38px/1.2 var(--display); letter-spacing: -.02em; }
     .meta { color: var(--stone); font-size: 10px; }
-    .entry { padding: 19px 0; border-bottom: 1px solid var(--sepia); }
-    h3 { font: 600 21px/1.3 var(--serif); }
-    .body { color: var(--stone); font-size: 18px; margin-top: 5px; }
-    .refs { font: 11px/1.8 var(--mono); margin-top: 8px; overflow-wrap: anywhere; }
-    .note { font-size: 17px; color: var(--stone); margin-top: 15px; }
-    .footer { border-top: 1px solid var(--sepia); padding: 20px 0 30px; color: var(--stone); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 10px; }
+    .entry { display: grid; grid-template-columns: 45px minmax(0, 1fr) 200px; gap: 24px; padding: 25px 0; border-bottom: 1px solid var(--sepia); counter-increment: entry; }
+    .entry::before { content: counter(entry, decimal-leading-zero); color: var(--oxblood); font: 13px/1.8 var(--mono); padding-top: 3px; }
+    h3 { font: 500 27px/1.16 var(--serif); max-width: 35ch; }
+    .body { color: var(--stone); font-size: 18px; line-height: 1.45; margin-top: 9px; max-width: 62ch; }
+    .refs { margin-top: 12px; overflow-wrap: anywhere; }
+    .margin-note { color: var(--stone); font-size: 10px; border-left: 1px solid var(--sepia); padding-left: 17px; align-self: start; margin-top: 4px; }
+    .margin-note span { display: block; color: var(--oxblood); margin-bottom: 7px; }
+    .note { font-size: 17px; color: var(--stone); max-width: 65ch; margin: 20px 0 0 69px; }
+    #experiments { margin-bottom: 50px; }
+    .footer { border-top: 1px solid var(--ink); padding: 20px 0 30px; color: var(--stone); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 10px; }
     .skip { position: absolute; top: -100px; padding: 10px; background: var(--cream); z-index: 1; }
     .skip:focus { top: 8px; }
-    @media (max-width: 760px) {
-      .shell { padding: 0 22px; }
-      .layout { grid-template-columns: 1fr; gap: 32px; padding-top: 32px; }
-      .profile { position: static; }
-      h1 { font-size: 42px; margin-bottom: 10px; }
-      .profile-links { flex-direction: row; flex-wrap: wrap; gap: 8px 18px; margin: 16px 0; }
-      nav { flex-direction: row; flex-wrap: wrap; gap: 20px; padding-top: 12px; }
-      .intro { font-size: 22px; }
-      .site-link { margin-bottom: 28px; }
+    @media (max-width: 800px) {
+      .shell { padding: 0 25px; }
+      .profile { gap: 25px; }
+      .opening { gap: 25px; }
+      .entry { grid-template-columns: 28px minmax(0, 1fr); gap: 15px; }
+      .margin-note { grid-column: 2; border: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 12px; margin-top: 0; }
+      .margin-note span { margin: 0; }
+      .section-head { grid-template-columns: 1fr; gap: 6px; }
+      .note { margin-left: 43px; }
+    }
+    @media (max-width: 560px) {
+      .shell { padding: 0 20px; }
+      .masthead { padding: 10px 0; }
+      .profile { grid-template-columns: 1fr; padding-top: 32px; gap: 28px; }
+      h1 { font-size: clamp(70px, 21vw, 112px); }
+      .profile-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; align-items: start; }
+      .bio { font-size: 16px; padding-left: 12px; }
+      .profile-links { margin: 0; gap: 5px 15px; font-size: 10px; }
+      nav { margin-top: 0; gap: 5px 19px; font-size: 10px; }
+      nav a span { margin-right: 5px; }
+      .opening { grid-template-columns: 1fr; gap: 16px; padding: 25px 0 32px; }
+      .intro { font-size: 23px; }
+      .site-link { max-width: none; font-size: 16px; }
+      h2 { font-size: 31px; }
+      h3 { font-size: 25px; }
+      .body { font-size: 17px; }
+      .entry { padding: 21px 0; }
     }
     @media print {
-      .profile { position: static; }
       #impression, nav, .skip { display: none !important; }
-      .layout { display: block; }
-      .profile { margin-bottom: 25px; }
+      h1 { font-size: 65px; }
       .entry { break-inside: avoid; }
+      .profile { padding-top: 20px; }
     }
   </style>
 </head>
@@ -234,12 +260,13 @@
   <a class="skip" href="#content">Skip to research</a>
   <div class="shell">
     <div class="masthead">
-      <span class="label">Personal research index</span>
+      <span class="label">Kenny Wang / Independent research</span>
       <button id="impression" type="button" aria-label="Impression: automatic">Theme · <span data-impression-state>AUTO</span></button>
     </div>
     <div class="layout">
       <header class="profile">
-        <h1>Kenny Wang</h1>
+        <h1><span>Kenny</span> <span class="surname">Wang</span></h1>
+        <div class="profile-detail">
         <p class="bio">Independent researcher.<br>Founder, CIRWEL Systems.</p>
         <div class="profile-links">
           <a href="https://orcid.org/0009-0006-7544-2374">ORCID</a>
@@ -247,15 +274,18 @@
           <a href="https://huggingface.co/hikewa">Hugging Face</a>
           <a href="mailto:founder@cirwel.org">Email</a>
         </div>
+        </div>
         <nav aria-label="Research index">
-          <a href="#research">Papers &amp; preprints</a>
-          <a href="#systems">Software</a>
-          <a href="#data">Datasets &amp; reproduction</a>
+          <a href="#research"><span aria-hidden="true">I.</span> Papers</a>
+          <a href="#systems"><span aria-hidden="true">II.</span> Software</a>
+          <a href="#data"><span aria-hidden="true">III.</span> Data</a>
         </nav>
       </header>
       <main id="content">
+        <div class="opening">
         <p class="intro">I study how AI agent work stays attributable, reviewable, and recoverable across sessions, restarts, and handoffs.</p>
-        <p class="site-link">This is an index of my work. For UNITARES and how to run it, visit <a href="https://cirwel.org">cirwel.org ↗</a>.</p>
+        <p class="site-link">Papers, code, and research materials.<br>For UNITARES and how to run it:<br><a href="https://cirwel.org">cirwel.org ↗</a>.</p>
+        </div>
 <section id="research" aria-labelledby="research-heading">
 <div class="section-head"><h2 id="research-heading">Papers &amp; preprints</h2><span class="meta">Four papers and preprints</span></div>
 <article class="entry">
@@ -264,6 +294,7 @@
               <p class="body">The framework paper for runtime state estimation, calibration, governance, and the production measurements behind the deployed system.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.19647159">Zenodo</a> · <a href="https://github.com/CIRWEL/unitares-paper-v6">Source</a></p>
             </div>
+          <aside class="margin-note"><span>Framework paper</span>Runtime state<br>Calibration &amp; governance</aside>
           </article>
 <article class="entry">
             <div>
@@ -271,6 +302,7 @@
               <p class="body">Treats identity as a longitudinal trajectory rather than a reused label or a single process instance, with early multi-agent discrimination work.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.20098168">Zenodo</a> · <a href="https://github.com/CIRWEL/trajectory-identity-paper">Source</a></p>
             </div>
+          <aside class="margin-note"><span>Preprint</span>Process boundaries<br>Continuity of identity</aside>
           </article>
 <article class="entry">
             <div>
@@ -278,6 +310,7 @@
               <p class="body">Tests whether ideas from allostatic load and proprioception remain useful when translated into measured, non-biological runtime signals.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.21930092">Zenodo</a> · <a href="https://github.com/CIRWEL/digital-proprioception-paper">Source</a></p>
             </div>
+          <aside class="margin-note"><span>Preprint</span>Operational self-sensing<br>Non-biological signals</aside>
           </article>
 <article class="entry">
             <div>
@@ -285,6 +318,7 @@
               <p class="body">Design and pre-registered evaluation plan for a testbed where each principal runs its own governance instance and cross-principal interaction is mediated by verifiable attestation rather than a central authority. The benchmark measures the price of decentralization rather than assuming it.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.21930161">Zenodo</a></p>
             </div>
+          <aside class="margin-note"><span>Preprint / evaluation plan</span>Independent principals<br>Verifiable attestation</aside>
           </article>
 <p class="note">Prediction and intervention benefit remain open questions. <a href="https://cirwel.org/research">Results, caveats, and the research record ↗</a></p>
 </section>
@@ -296,6 +330,7 @@
               <p class="body">Self-hosted infrastructure for identity, evidence, memory, longitudinal state, review, policy, recovery, leases, handoffs, and coordination. Exposes MCP, REST, an SDK, and operator surfaces.</p>
               <p class="refs"><a href="https://github.com/CIRWEL/unitares">Repository</a> · <a href="https://doi.org/10.5281/zenodo.19647159">Paper</a> · <a href="https://pypi.org/project/unitares-sdk/">PyPI</a> · <a href="https://doi.org/10.5281/zenodo.20320440">Archived release</a></p>
             </div>
+          <aside class="margin-note"><span>Server &amp; SDK</span>Apache-2.0<br>MCP · REST · Python</aside>
           </article>
 <article class="entry">
             <div>
@@ -303,6 +338,7 @@
               <p class="body">A Raspberry Pi sensor system used to test longitudinal telemetry, continuity, and state-estimation machinery against a physically situated process. Its traces support the digital-proprioception work and the published datasets.</p>
               <p class="refs"><a href="https://github.com/CIRWEL/anima-mcp">Repository</a></p>
             </div>
+          <aside class="margin-note"><span>Physical testbed</span>Raspberry Pi<br>Longitudinal telemetry</aside>
           </article>
 <article class="entry">
             <div>
@@ -310,6 +346,7 @@
               <p class="body">Conversation loops, provider adapters, tools, scheduling, and queues built on the public UNITARES contract. The resident is optional; a custom runtime can use the SDK directly.</p>
               <p class="refs"><a href="https://github.com/CIRWEL/unitares-resident">Repository</a></p>
             </div>
+          <aside class="margin-note"><span>Agent runtime</span>Optional userland<br>Tools &amp; scheduling</aside>
           </article>
 <article class="entry">
             <div>
@@ -317,6 +354,7 @@
               <p class="body">Thin integrations that connect Claude Code, Codex, Hermes, and other hosts to UNITARES check-ins, review, memory, and policy surfaces without moving the agent loop into Core.</p>
               <p class="refs"><a href="https://github.com/CIRWEL/unitares-host-adapter">Host adapter</a> · <a href="https://github.com/CIRWEL/unitares-governance-plugin">Plugin</a></p>
             </div>
+          <aside class="margin-note"><span>Integration</span>Existing agent harnesses<br>Adapters &amp; plugin</aside>
           </article>
 </section>
 <section id="data" aria-labelledby="data-heading">
@@ -327,6 +365,7 @@
               <p class="body">32,181 labeled trajectory windows: 20,655 overlapping real windows from the embedded deployment, plus 11,526 synthetic examples across nine shape classes.</p>
               <p class="refs"><a href="https://huggingface.co/datasets/hikewa/unitares-eisv-trajectories">Hugging Face</a> · <a href="https://github.com/CIRWEL/eisv-lumen">Source</a></p>
             </div>
+          <aside class="margin-note"><span>Dataset</span>Real &amp; synthetic windows<br>Nine shape classes</aside>
           </article>
 <article class="entry">
             <div>
@@ -334,6 +373,7 @@
               <p class="body">Data and scripts for replaying how governance decisions change under alternative baseline and input assumptions.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.19705150">Zenodo</a> · <a href="https://huggingface.co/datasets/hikewa/unitares-verdict-counterfactual-v6.8">Hugging Face</a> · <a href="https://github.com/CIRWEL/unitares-repro-v6">Source</a></p>
             </div>
+          <aside class="margin-note"><span>Reproduction kit</span>v6 counterfactual analysis<br>Data &amp; replay scripts</aside>
           </article>
 </section>
 <p class="note" id="experiments">CIRWEL is an independent, single-operator research programme. Deployment evidence comes from my own environment; it does not establish external adoption or cross-operator generality.</p>
