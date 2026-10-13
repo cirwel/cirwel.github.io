@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reading guide — CIRWEL research</title>
+  <meta name="description" content="A guide to four CIRWEL papers: runtime signals, state estimation, trajectory identity, and accountable action. Questions, evidence, and open work for the October 13, 2026 revisions.">
+  <meta property="og:title" content="State, identity, and accountability — CIRWEL reading guide">
+  <meta property="og:description" content="Four papers, their evidence, and their open questions. Read EISV as a runtime instrument with distinct measurement and policy claims.">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://cirwel.github.io/reading-guide.html">
+  <link rel="canonical" href="https://cirwel.github.io/reading-guide.html">
+  <link rel="icon" href="assets/favicon-hex.svg" type="image/svg+xml">
+<script>
+    try {
+      var i = localStorage.getItem('cirwel-impression');
+      if (i === 'dark' || i === 'light') document.documentElement.setAttribute('data-theme', i);
+    } catch (e) {}
+    document.documentElement.className += ' js';
+  </script>
+<style>
+    /* Shared CIRWEL palette and fonts, with an independent index layout. */
+    /* Self-hosted, latin + latin-ext subsets only. No font CDN: the site
+       must render identically with no third-party request. */
+    @font-face {
+      font-family: 'Bodoni Moda Variable';
+      font-style: normal; font-display: swap; font-weight: 400 900;
+      src: url(fonts/bodoni-moda-latin-opsz-normal.woff2) format('woff2-variations');
+      unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+    }
+    @font-face {
+      font-family: 'Bodoni Moda Variable';
+      font-style: normal; font-display: swap; font-weight: 400 900;
+      src: url(fonts/bodoni-moda-latin-ext-opsz-normal.woff2) format('woff2-variations');
+      unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'EB Garamond Variable';
+      font-style: normal; font-display: swap; font-weight: 400 800;
+      src: url(fonts/eb-garamond-latin-wght-normal.woff2) format('woff2-variations');
+      unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+    }
+    @font-face {
+      font-family: 'EB Garamond Variable';
+      font-style: normal; font-display: swap; font-weight: 400 800;
+      src: url(fonts/eb-garamond-latin-ext-wght-normal.woff2) format('woff2-variations');
+      unicode-range: U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF;
+    }
+    @font-face {
+      font-family: 'EB Garamond Variable';
+      font-style: italic; font-display: swap; font-weight: 400 800;
+      src: url(fonts/eb-garamond-latin-wght-italic.woff2) format('woff2-variations');
+      unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      font-style: normal; font-display: swap; font-weight: 400;
+      src: url(fonts/jetbrains-mono-latin-400-normal.woff2) format('woff2');
+      unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+    }
+    @font-face {
+      font-family: 'JetBrains Mono';
+      font-style: normal; font-display: swap; font-weight: 500;
+      src: url(fonts/jetbrains-mono-latin-500-normal.woff2) format('woff2');
+      unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+    }
+
+    /* CLS fallbacks. size-adjust matches the fallback's x-height to the
+       webfont's; ascent/descent are the webfont's own hhea metrics divided
+       by that factor. Measured on cirwel-site, not estimated — EB Garamond
+       0.4000em, Bodoni Moda 0.4600em, Georgia 0.4814em. */
+    @font-face {
+      font-family: 'Garamond Fallback';
+      src: local('Georgia'), local('Times New Roman');
+      size-adjust: 83.09%; ascent-override: 121.19%; descent-override: 35.87%; line-gap-override: 0%;
+    }
+    @font-face {
+      font-family: 'Bodoni Fallback';
+      src: local('Didot'), local('Georgia'), local('Times New Roman');
+      size-adjust: 95.55%; ascent-override: 117.74%; descent-override: 41.86%; line-gap-override: 0%;
+    }
+
+    /* ---------------------------------------------------------------------
+       TWO IMPRESSIONS OF ONE PLATE
+       Light is the house register: a copperplate line engraving pulled on laid
+       cream. Dark is not that inverted — it is the same plate pulled as a
+       MEZZOTINT, the intaglio process that works dark-to-light, grounding the
+       plate to print solid and burnishing the lights back out of it.
+
+       The dark set is deliberately NOT ratio-parity with the light set. A
+       screen is emissive, not reflective, so light glyphs bloom into their
+       counters and light hairlines read thinner than dark ones on paper. Body
+       ink therefore comes DOWN (12.5:1, about 0.78x cream's 16:1) and drawn
+       marks come UP (rules 2.2:1, about 1.36x cream's 1.6:1). The accent
+       cannot reach oxblood's 9.1:1 on this ground without becoming a salmon
+       pink, so it stops at 6.4:1 and that gap is stated rather than hidden.
+
+       Mirrored from cirwel-site's tailwind.config.mjs and global.css.
+       scripts/check-index.py leg E asserts every token there appears here.
+       --------------------------------------------------------------------- */
+    :root {
+      --cream:   #F5F1E8;
+      --ink:     #1A1612;
+      --oxblood: #7A1F1F;
+      --ochre:   #B8862F;
+      --stone:   #5C544A;
+      --sepia:   #C9C0AE;
+
+      --grain-opacity: 0.04;
+      --grain-blend: multiply;
+      --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.10 0 0 0 0 0.08 0 0 0 0 0.04 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      --rule-soft: rgb(122 31 31 / 0.3);
+      --running-head-bg: rgb(245 241 232 / 0.94);
+      color-scheme: light;
+
+      --measure: 40rem;
+      --max:     72rem;
+      --serif:   'EB Garamond Variable', 'Garamond Fallback', Georgia, serif;
+      --display: 'Bodoni Moda Variable', 'Bodoni Fallback', Didot, Georgia, serif;
+      --mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+    }
+
+    /* Applied twice: once for a reader whose system asks for dark, once for a
+       reader who asked this page directly. `:not([data-theme="light"])` lets an
+       explicit choice win over the system preference in both directions. */
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+      --cream:   #15110D;  /* bistre-black ground */
+      --ink:     #DBD2BF;  /* 12.5:1, DOWN from cream's 16:1 — light text
+                              blooms, so parity here reads as glare */
+      --oxblood: #7FAFA2;  /* verdigris, 7.7:1. The accent role, filled at night
+                              by the pigment that suits the ground. #7A1F1F here
+                              is 2:1 and vanishes. No gold token: it was
+                              pumpkin and carried no markup. */
+      --stone:   #A89F90;  /* 7.2:1, near cream's 6.6:1 */
+      --sepia:   #554A3C;  /* 2.2:1, UP from cream's 1.6:1 — a light hairline
+                              on a dark ground reads thinner than the reverse */
+
+      --grain-opacity: 0.05;
+      --grain-blend: screen;
+      /* On a mezzotint ground the tooth is what catches the light, so the
+         specks lighten rather than darken. */
+      --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.80 0 0 0 0 0.68 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      --rule-soft: rgb(127 175 162 / 0.35);
+      --running-head-bg: rgb(21 17 13 / 0.94);
+      color-scheme: dark;
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --cream:   #15110D;  /* bistre-black ground */
+      --ink:     #DBD2BF;  /* 12.5:1, DOWN from cream's 16:1 — light text
+                              blooms, so parity here reads as glare */
+      --oxblood: #7FAFA2;  /* verdigris, 7.7:1. The accent role, filled at night
+                              by the pigment that suits the ground. #7A1F1F here
+                              is 2:1 and vanishes. No gold token: it was
+                              pumpkin and carried no markup. */
+      --stone:   #A89F90;  /* 7.2:1, near cream's 6.6:1 */
+      --sepia:   #554A3C;  /* 2.2:1, UP from cream's 1.6:1 — a light hairline
+                              on a dark ground reads thinner than the reverse */
+
+      --grain-opacity: 0.05;
+      --grain-blend: screen;
+      /* On a mezzotint ground the tooth is what catches the light, so the
+         specks lighten rather than darken. */
+      --grain: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.86 0 0 0 0 0.80 0 0 0 0 0.68 0 0 0 0.5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      --rule-soft: rgb(127 175 162 / 0.35);
+      --running-head-bg: rgb(21 17 13 / 0.94);
+      color-scheme: dark;
+    }
+
+
+    
+    * { box-sizing: border-box; }
+    html { scroll-padding-top: 2rem; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font: 20px/1.5 var(--serif); }
+    a { color: var(--oxblood); text-decoration-thickness: 1px; text-underline-offset: .2em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 2px solid var(--oxblood); outline-offset: 5px; }
+    .shell { max-width: 980px; margin: auto; padding: 0 48px; }
+    .masthead { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--ink); padding: 18px 0; }
+    .masthead, .label, .refs, nav, footer { font: 11px/1.7 var(--mono); }
+    .masthead a { text-decoration: none; color: var(--ink); }
+    #impression { display: none; color: var(--stone); background: transparent; border: 0; padding: 8px 0 8px 12px; cursor: pointer; font: 10px var(--mono); min-height: 44px; }
+    .js #impression { display: inline-block; }
+    header { padding: 46px 0 30px; }
+    .label { color: var(--stone); text-transform: uppercase; letter-spacing: .07em; }
+    h1 { font: 400 clamp(50px, 7vw, 80px)/1.04 var(--display); letter-spacing: -.03em; margin: 20px 0 28px; }
+    .lead { font-size: 26px; line-height: 1.35; }
+    p { max-width: 70ch; margin: 1em 0; }
+    nav { display: flex; flex-wrap: wrap; gap: 12px 24px; padding-top: 18px; }
+    section { padding: 28px 0 30px; border-top: 1px solid var(--sepia); }
+    .section-head { margin-bottom: 20px; }
+    h2 { font: 400 35px/1.2 var(--display); letter-spacing: -.02em; margin: 8px 0 0; }
+    .question { color: var(--oxblood); font-size: 23px; line-height: 1.35; }
+    dl { margin: 22px 0; }
+    .signals, .record { display: grid; grid-template-columns: 105px minmax(0, 1fr); gap: 14px 22px; }
+    dt { font: 12px/1.8 var(--mono); padding-top: 3px; color: var(--oxblood); }
+    dd { margin: 0; }
+    .signals { grid-template-columns: 28px minmax(0, 1fr); font-size: 18px; }
+    .refs { margin: 23px 0 0; overflow-wrap: anywhere; }
+    footer { border-top: 1px solid var(--ink); padding: 15px 0 32px; color: var(--stone); }
+    footer p { max-width: 100%; }
+    .skip { position: absolute; left: -9999px; }
+    .skip:focus { left: 16px; top: 12px; padding: 8px; background: var(--cream); }
+    @media (max-width: 600px) {
+      .shell { padding: 0 22px; }
+      header { padding-top: 30px; }
+      body { font-size: 19px; }
+      .lead { font-size: 23px; }
+      h2 { font-size: 30px; }
+      .record { grid-template-columns: 1fr; gap: 4px; }
+      .record dd + dt { margin-top: 13px; }
+      .signals { gap: 12px 14px; }
+    }
+    @media print {
+      :root, :root[data-theme="dark"] { --cream: #fff; --ink: #1A1612; --oxblood: #7A1F1F; --stone: #5C544A; --sepia: #C9C0AE; color-scheme: light; }
+      body { font-size: 12pt; }
+      .shell { padding: 0; max-width: none; }
+      nav, #impression { display: none !important; }
+      h1 { font-size: 36pt; }
+      section { break-inside: avoid; }
+    }
+</style>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to guide</a>
+  <div class="shell">
+    <div class="masthead">
+      <a href="./#research">Kenny Wang / Research</a>
+      <button id="impression" type="button"><span data-impression-state>AUTO</span> ◐</button>
+    </div>
+    <header>
+      <p class="label">Reading guide · October 13, 2026 revisions</p>
+      <h1>State, identity,<br> and accountability.</h1>
+      <p class="lead">Four papers on making long-running AI agent work inspectable across sessions, changing runtimes, and separately controlled systems.</p>
+      <p>The papers connect runtime state estimation, continuity of identity, and attributable action. Each has its own evidence and open questions. The suggested reading order below starts with the concrete instrument audit, then widens to the framework, identity, and federated accountability.</p>
+      <nav aria-label="Guide sections"><a href="#signals">Read the signals</a><a href="#flat">Instrument audit</a><a href="#unitares">Framework</a><a href="#trajectory">Identity</a><a href="#accountability">Accountability</a></nav>
+    </header>
+    <main id="content">
+      <section id="signals" aria-labelledby="signals-heading">
+        <div class="section-head"><span class="label">Orientation</span><h2 id="signals-heading">What EISV records</h2></div>
+        <p>EISV is intended to help agents read their runtime state and operators inspect the system. Its implemented coordinates compress and smooth observations, including the controller’s own history:</p>
+        <dl class="signals">
+          <dt>E</dt><dd>A blend of prior policy actions, controller coherence level, complexity divergence, and available outcome, continuity, and tool features.</dd>
+          <dt>I</dt><dd>A calibration and consistency blend. The deployed calibration input is fleet-scoped; a reading is not a correctness score for the current claim.</dd>
+          <dt>S</dt><dd>A blend of drift, regime changes, complexity divergence, and available continuity and tool features.</dd>
+          <dt>V</dt><dd>The separately smoothed, signed gap between the raw E and I observations.</dd>
+        </dl>
+        <p>Controller feedback remains information about the system’s response. It does not independently confirm the condition that prompted that response. Measurement fidelity, diagnosis, usefulness to a reader, outcome prediction, and intervention benefit are distinct claims. A signal can be recorded and inspected while those further questions remain open.</p>
+        <p class="refs">Runtime definitions as of October 13: <a href="https://github.com/cirwel/unitares/blob/00d986cdf938b3a93e5d0cacd87970975aa3d2c2/docs/EISV_COMPUTATION.md#what-the-signals-record">signal definitions</a> · <a href="https://github.com/cirwel/unitares/blob/00d986cdf938b3a93e5d0cacd87970975aa3d2c2/docs/ontology/eisv-proprioception-contract.md#canonical-operational-doctrine">sensing, estimation, and regulation</a></p>
+      </section>
+
+      <section id="flat" aria-labelledby="flat-heading">
+        <div class="section-head"><span class="label">01 · Instrument audit</span><h2 id="flat-heading">A Flat Coherence Score</h2></div>
+        <p class="question">What information did one deployed score retain, and what did it contribute at the thresholds where it was used?</p>
+        <dl class="record">
+          <dt>Evidence</dt><dd>Two frozen production windows and a reproducible basin-label replay. The legacy coherence score stayed concentrated and rarely affected those basin assignments, while retaining descriptive class information. A per-class replacement changed labels.</dd>
+          <dt>Still open</dt><dd>Whether the replacement measures the intended property better, helps a particular reader or task, or merits a policy change. The replay establishes a change in classification; it does not validate the replacement labels.</dd>
+        </dl>
+        <p class="refs"><a href="https://doi.org/10.5281/zenodo.23337714">Read v2.0.1</a> · <a href="https://github.com/cirwel/digital-proprioception-paper/tree/paper-v2.0.1">Source and reproduction</a></p>
+      </section>
+
+      <section id="unitares" aria-labelledby="unitares-heading">
+        <div class="section-head"><span class="label">02 · Framework</span><h2 id="unitares-heading">UNITARES</h2></div>
+        <p class="question">How can runtime observations support state estimation and governance across heterogeneous agents?</p>
+        <dl class="record">
+          <dt>Evidence</dt><dd>A mathematical framework, dated deployment measurements, calibration analyses, and an explicitly bounded continuous-system contraction result. The current implementation uses weighted indices; the information-theoretic definitions remain research targets.</dd>
+          <dt>Still open</dt><dd>The empirical interpretation and usefulness of particular estimates. The continuous proof does not transfer automatically to the numerical update or adaptive governor. Use the runtime definitions above for the present implementation; the paper describes its stated deployment period.</dd>
+        </dl>
+        <p class="refs"><a href="https://doi.org/10.5281/zenodo.23337711">Read v6.9.4</a> · <a href="https://github.com/cirwel/unitares-paper-v6/tree/paper-v6.9.4">Source, figures, and audits</a></p>
+      </section>
+
+      <section id="trajectory" aria-labelledby="trajectory-heading">
+        <div class="section-head"><span class="label">03 · Identity</span><h2 id="trajectory-heading">Trajectory Identity</h2></div>
+        <p class="question">Can patterns over time describe continuity beyond a reused identifier?</p>
+        <dl class="record">
+          <dt>Evidence</dt><dd>A trajectory-signature framework, observations from one embodied agent, a stored twelve-episode recovery summary, and a four-agent pilot. A separate production-metric audit exposed sensitivity to era and harness. That audit and the pilot use different instruments.</dd>
+          <dt>Still open</dt><dd>Individual discrimination across harness changes, separation from role, and independent reconstruction of recovery from raw history. The paper’s five scored components and derived Eta summary must be distinguished from the separate UNITARES implementation.</dd>
+        </dl>
+        <p class="refs"><a href="https://doi.org/10.5281/zenodo.23337710">Read v0.18</a> · <a href="https://github.com/cirwel/trajectory-identity-paper/tree/paper-v0.18">Source and analyses</a></p>
+      </section>
+
+      <section id="accountability" aria-labelledby="accountability-heading">
+        <div class="section-head"><span class="label">04 · Accountability</span><h2 id="accountability-heading">Accountability Without<br> a Trusted Center</h2></div>
+        <p class="question">How can separately controlled systems establish who acted, under whose authority, and through which delegation chain?</p>
+        <dl class="record">
+          <dt>Evidence</dt><dd>A testbed design and frozen evaluation plan, a single-server trace, and an eleven-case attestation demonstration across two hosts. One operator controlled both hosts.</dd>
+          <dt>Still open</dt><dd>The registered comparison of federated and centralized control, authorization baselines, and independent replication. The attestation demonstration exercises a primitive; it supplies no benchmark result for federated governors.</dd>
+        </dl>
+        <p class="refs"><a href="https://doi.org/10.5281/zenodo.23337729">Read v1.3 and supporting artifacts</a> · <a href="https://github.com/cirwel/unitares/blob/49143add79ee630a60549f9ba79f1ca9b62b3423/docs/proposals/registered/accountable-testbed-metrics-preregistration-v1.md">Frozen evaluation registration</a></p>
+      </section>
+
+      <section id="runtime-evidence" aria-labelledby="runtime-heading">
+        <div class="section-head"><span class="label">Companion evidence</span><h2 id="runtime-heading">Instrument quality has its own tests</h2></div>
+        <p>Recent runtime work adds evidence separate from the paper replay. An exploratory synthetic S-axis experiment found responses to injected deviations and reproduced identical readings for identical input and initial state. It also exposed vocabulary sensitivity and a regime feedback loop. An E/I input audit identified controller-history dependence and missing admissible calibration pairs. These findings guide instrument repair and evaluation.</p>
+        <p>Faithful response, robustness, and usable explanations can be studied directly. Outcome prediction is a separate registered question, and intervention authority requires a separate decision.</p>
+        <p class="refs"><a href="https://github.com/cirwel/unitares/blob/00d986cdf938b3a93e5d0cacd87970975aa3d2c2/docs/evaluations/eisv-s-faithfulness/result-v0.md">S experiment</a> · <a href="https://github.com/cirwel/unitares/blob/00d986cdf938b3a93e5d0cacd87970975aa3d2c2/docs/evaluations/eisv-ei-referent/result-v0.md">E/I input audit</a> · <a href="https://github.com/cirwel/unitares/blob/00d986cdf938b3a93e5d0cacd87970975aa3d2c2/docs/plans/eisv-instrument-quality-2026-10-13.md">Instrument-quality plan</a></p>
+      </section>
+    </main>
+    <footer><p>This guide describes the October 13 revisions and dated runtime evidence. Version links preserve those exact records; the <a href="./#research">research index</a> links to the latest archived versions.</p><p>Kenny Wang · CIRWEL</p></footer>
+  </div>
+  <script>
+    /* Impression control. Three states, because two would force a reader to
+       choose one impression forever the moment they touched it: auto follows
+       the system, day and night override it. The label names the state, not
+       the action; the action is in the aria-label and the tooltip. */
+    (function () {
+      var btn = document.getElementById('impression');
+      if (!btn) return;
+      var text = btn.querySelector('[data-impression-state]');
+      var order = ['auto', 'day', 'night'];
+      var attr = { auto: null, day: 'light', night: 'dark' };
+      var says = {
+        auto:  'Impression follows your system. Change to day.',
+        day:   'Impression: day. Change to night.',
+        night: 'Impression: night. Change to automatic.'
+      };
+      var state = 'auto';
+      try {
+        var stored = localStorage.getItem('cirwel-impression');
+        if (stored === 'light') state = 'day';
+        else if (stored === 'dark') state = 'night';
+      } catch (e) {}
+
+      function apply() {
+        var v = attr[state];
+        if (v) document.documentElement.setAttribute('data-theme', v);
+        else document.documentElement.removeAttribute('data-theme');
+        if (text) text.textContent = state.toUpperCase();
+        btn.setAttribute('aria-label', says[state]);
+        btn.setAttribute('title', says[state]);
+        try {
+          if (v) localStorage.setItem('cirwel-impression', v);
+          else localStorage.removeItem('cirwel-impression');
+        } catch (e) {}
+      }
+
+      apply();
+      btn.addEventListener('click', function () {
+        state = order[(order.indexOf(state) + 1) % order.length];
+        apply();
+      });
+    })();
+
+  </script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 # cirwel.github.io
 
-Single-page research index for Kenny Wang / CIRWEL: systems, papers, datasets, and
+Research index and reading guide for Kenny Wang / CIRWEL: systems, papers, datasets, and
 experiments around infrastructure for long-lived AI agents.
 
 Served as a GitHub Pages user site at **https://cirwel.github.io/**.
@@ -76,3 +76,17 @@ leg fires on both. A checker nobody has watched fail is not evidence.
 The public entrance is intentionally plain; deeper research vocabulary belongs in
 the linked papers and project repositories rather than in a rotating homepage
 taxonomy.
+
+## Reading guide
+
+`reading-guide.html` is a dated guide to the October 13, 2026 paper revisions and
+runtime signal definitions. Its version DOIs and commit-pinned sources preserve
+that evidence scope; the index keeps concept DOIs for the current archives.
+The guide distinguishes recorded signal, interpretation, reader usefulness,
+prediction, and intervention. Do not turn an unresolved outcome question into
+a verdict on the existence or purpose of an instrument.
+
+Keep its palette and self-hosted typography aligned with the index. Check both
+pages at desktop and mobile widths and in day/night modes after layout changes.
+The paper metadata guards live with their manuscript sources; this guide is not
+a substitute for scientific review or a new empirical result.

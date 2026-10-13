@@ -4,3 +4,7 @@
 # OS / editor cruft
 .DS_Store
 *.swp
+
+# Session-owned browser validation artifacts
+.playwright-cli/
+output/playwright/
