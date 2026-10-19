@@ -68,7 +68,9 @@ leg fires on both. A checker nobody has watched fail is not evidence.
 
 - `index.html` — the whole page. No build step, no dependencies.
 - `fonts/` — self-hosted woff2 subsets (latin + latin-ext). No font CDN: the
-  page must render identically with no third-party request.
+  page must render identically with no third-party request. Bodoni Moda,
+  EB Garamond and JetBrains Mono are used under the SIL Open Font License 1.1;
+  the copyright notices and license text are in `fonts/OFL.txt`.
 - `assets/` — brand marks, copied from `cirwel-site/public`.
 - `scripts/check-index.py` — the deposit check above. Standard library + curl,
   no dependencies.
