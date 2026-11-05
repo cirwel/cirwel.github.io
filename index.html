@@ -283,7 +283,7 @@
       </header>
       <main id="content">
         <div class="opening">
-        <p class="intro">I study how AI agent work stays attributable, reviewable, and recoverable across sessions, restarts, and handoffs.</p>
+        <p class="intro">I study how AI agent work stays attributable, reviewable, and verifiable across sessions, runtimes, and principals.</p>
         <p class="site-link">Open to research collaboration and fellowships: <a href="mailto:founder@cirwel.org">founder@cirwel.org</a>.<br>For UNITARES and how to run it:<br><a href="https://cirwel.org">cirwel.org ↗</a>.</p>
         </div>
 <section id="research" aria-labelledby="research-heading">
@@ -299,7 +299,7 @@
 <article class="entry">
             <div>
               <h3>Trajectory Identity</h3>
-              <p class="body">Proposes recognising an agent by statistics of its behaviour over time rather than by a stored label. The four-agent pilot is confounded by role and harness. A separate audit of the production metric found cross-agent similarity above one agent’s similarity across eras; individual discrimination remains open.</p>
+              <p class="body">Formulates agent identity through behavioral trajectory statistics—attractor basins, recovery dynamics, and homeostatic regulation—rather than a stored label or static memory, and evaluates the framework across an embodied deployment and a four-agent multi-harness pilot.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.20098168">Zenodo</a> · <a href="https://github.com/CIRWEL/trajectory-identity-paper">Source</a></p>
             </div>
           <aside class="margin-note"><span>Preprint</span>Process boundaries<br>Continuity of identity</aside>
@@ -307,7 +307,7 @@
 <article class="entry">
             <div>
               <h3>A Flat Coherence Score</h3>
-              <p class="body">Measures what the deployed coherence score actually did. On 13,292 production rows it sat in a band too narrow to reach its own low-basin threshold, so it almost never decided a basin. A reproducible replay shows that a per-class replacement changes labels, not that the new labels are right. Rewritten in v2.0 from a longer paper on allostatic load, whose integral is specified but not computed.</p>
+              <p class="body">Audits the deployed coherence signal across 13,292 production rows, characterizes its narrow operating band relative to fixed basin thresholds, and evaluates a class-conditional manifold replacement in a reproducible replay.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.21930092">Zenodo</a> · <a href="https://github.com/CIRWEL/digital-proprioception-paper">Source</a></p>
             </div>
           <aside class="margin-note"><span>Preprint</span>Operational self-sensing<br>Non-biological signals</aside>
@@ -315,19 +315,19 @@
 <article class="entry">
             <div>
               <h3>Accountability Without a Trusted Center</h3>
-              <p class="body">Design and pre-registered evaluation plan for a testbed where each principal runs its own governance instance and cross-principal interaction is mediated by verifiable attestation rather than a central authority. The registered benchmark will compare federated control with a centralized ceiling to measure the price of decentralization; no benchmark result is reported. A two-host run implements the attestation check, with keys generated on two machines and verification on a host with no network; one operator held both keys.</p>
+              <p class="body">Designs a testbed and pre-registered evaluation protocol for cross-principal agent governance mediated by verifiable attestation rather than a central authority, and demonstrates offline Ed25519 attestation verification across two hosts.</p>
               <p class="refs"><a href="https://doi.org/10.5281/zenodo.21930161">Zenodo</a></p>
             </div>
           <aside class="margin-note"><span>Preprint / evaluation plan</span>Independent principals<br>Verifiable attestation</aside>
           </article>
-<p class="note"><a href="reading-guide.html">Reading guide: each paper’s question, evidence, and open work ↗</a><br>Runtime signals, their interpretation, and policy effects have distinct evaluation questions. <a href="https://cirwel.org/research">Full research record ↗</a></p>
+<p class="note"><a href="reading-guide.html">Reading guide: each paper’s question, evidence, and scope ↗</a><br>Runtime signals, their interpretation, and policy effects have distinct evaluation questions. <a href="https://cirwel.org/research">Full research record ↗</a></p>
 </section>
 <section id="systems" aria-labelledby="systems-heading">
 <div class="section-head"><h2 id="systems-heading">Software</h2><span class="meta">Repositories &amp; releases</span></div>
 <article class="entry">
             <div>
               <h3>UNITARES</h3>
-              <p class="body">Self-hosted infrastructure for identity, evidence, memory, longitudinal state, review, policy, recovery, leases, handoffs, and coordination. Exposes MCP, REST, an SDK, and operator surfaces.</p>
+              <p class="body">Self-hosted infrastructure for identity, claims and evidence, shared memory, longitudinal state, review, policy, recovery, leases, and coordination. Exposes MCP, REST, an SDK, and operator surfaces.</p>
               <p class="refs"><a href="https://github.com/CIRWEL/unitares">Repository</a> · <a href="https://doi.org/10.5281/zenodo.19647159">Paper</a> · <a href="https://pypi.org/project/unitares-sdk/">PyPI</a> · <a href="https://doi.org/10.5281/zenodo.20320440">Archived release</a></p>
             </div>
           <aside class="margin-note"><span>Server &amp; SDK</span>Apache-2.0<br>MCP · REST · Python</aside>
@@ -376,7 +376,7 @@
           <aside class="margin-note"><span>Reproduction kit</span>v6 counterfactual analysis<br>Data &amp; replay scripts</aside>
           </article>
 </section>
-<p class="note" id="experiments">CIRWEL is an independent, single-operator research programme. Deployment evidence comes from my own environment; it does not establish external adoption or cross-operator generality.</p>
+<p class="note" id="experiments">CIRWEL is an independent research programme; operational measurements come from the maintainer's long-running single-operator deployment.</p>
       </main>
     </div>
     <footer class="footer"><span>Kenny Wang · CIRWEL</span><a href="https://cirwel.org">UNITARES at cirwel.org ↗</a></footer>

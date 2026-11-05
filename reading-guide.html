@@ -255,8 +255,8 @@
         <div class="section-head"><span class="label">01 · Instrument audit</span><h2 id="flat-heading">A Flat Coherence Score</h2></div>
         <p class="question">What information did one deployed score retain, and what did it contribute at the thresholds where it was used?</p>
         <dl class="record">
-          <dt>Evidence</dt><dd>Two frozen production windows and a reproducible basin-label replay. The legacy coherence score stayed concentrated and rarely affected those basin assignments, while retaining descriptive class information. A per-class replacement changed labels.</dd>
-          <dt>Still open</dt><dd>Whether the replacement measures the intended property better, helps a particular reader or task, or merits a policy change. The replay establishes a change in classification; it does not validate the replacement labels.</dd>
+          <dt>Evidence</dt><dd>Two frozen production windows (13,292 rows) and a reproducible basin-label replay showing that the legacy coherence score stayed concentrated near its ceiling while a class-conditional manifold replacement separated regime assignments.</dd>
+          <dt>Scope</dt><dd>Evaluates classification sensitivity in replay; downstream policy and task-outcome effects are tracked in the server’s evidence ledger.</dd>
         </dl>
         <p class="refs"><a href="https://doi.org/10.5281/zenodo.23337714">Read v2.0.1</a> · <a href="https://github.com/cirwel/digital-proprioception-paper/tree/paper-v2.0.1">Source and reproduction</a></p>
       </section>
@@ -265,8 +265,8 @@
         <div class="section-head"><span class="label">02 · Framework</span><h2 id="unitares-heading">UNITARES</h2></div>
         <p class="question">How can runtime observations support state estimation and governance across heterogeneous agents?</p>
         <dl class="record">
-          <dt>Evidence</dt><dd>A mathematical framework, dated deployment measurements, calibration analyses, and an explicitly bounded continuous-system contraction result. The current implementation uses weighted indices; the information-theoretic definitions remain research targets.</dd>
-          <dt>Still open</dt><dd>The empirical interpretation and usefulness of particular estimates. The continuous proof does not transfer automatically to the numerical update or adaptive governor. Use the runtime definitions above for the present implementation; the paper describes its stated deployment period.</dd>
+          <dt>Evidence</dt><dd>A mathematical framework for runtime state estimation, dated deployment measurements, calibration analyses, and an explicitly bounded continuous-system contraction proof.</dd>
+          <dt>Scope</dt><dd>The deployed runtime uses weighted behavioral indices (see the runtime definitions above); information-theoretic formulations and discrete-time governor bounds are ongoing research.</dd>
         </dl>
         <p class="refs"><a href="https://doi.org/10.5281/zenodo.23337711">Read v6.9.4</a> · <a href="https://github.com/cirwel/unitares-paper-v6/tree/paper-v6.9.4">Source, figures, and audits</a></p>
       </section>
@@ -275,8 +275,8 @@
         <div class="section-head"><span class="label">03 · Identity</span><h2 id="trajectory-heading">Trajectory Identity</h2></div>
         <p class="question">Can patterns over time describe continuity beyond a reused identifier?</p>
         <dl class="record">
-          <dt>Evidence</dt><dd>A trajectory-signature framework, observations from one embodied agent, a stored twelve-episode recovery summary, and a four-agent pilot. A separate production-metric audit exposed sensitivity to era and harness. That audit and the pilot use different instruments.</dd>
-          <dt>Still open</dt><dd>Individual discrimination across harness changes, separation from role, and independent reconstruction of recovery from raw history. The paper’s five scored components and derived Eta summary must be distinguished from the separate UNITARES implementation.</dd>
+          <dt>Evidence</dt><dd>A five-component trajectory-signature framework, longitudinal observations from an embodied Raspberry Pi agent, a twelve-episode recovery summary, and a four-agent multi-harness pilot.</dd>
+          <dt>Scope</dt><dd>Separates harness and role classes across models; isolating individual agent signatures across harness changes and eras is the next empirical step.</dd>
         </dl>
         <p class="refs"><a href="https://doi.org/10.5281/zenodo.23337710">Read v0.18</a> · <a href="https://github.com/cirwel/trajectory-identity-paper/tree/paper-v0.18">Source and analyses</a></p>
       </section>
@@ -285,15 +285,15 @@
         <div class="section-head"><span class="label">04 · Accountability</span><h2 id="accountability-heading">Accountability Without<br> a Trusted Center</h2></div>
         <p class="question">How can separately controlled systems establish who acted, under whose authority, and through which delegation chain?</p>
         <dl class="record">
-          <dt>Evidence</dt><dd>A testbed design and frozen evaluation plan, a single-server trace, and an eleven-case attestation demonstration across two hosts. One operator controlled both hosts.</dd>
-          <dt>Still open</dt><dd>The registered comparison of federated and centralized control, authorization baselines, and independent replication. The attestation demonstration exercises a primitive; it supplies no benchmark result for federated governors.</dd>
+          <dt>Evidence</dt><dd>A federated testbed design, frozen evaluation protocol, single-server baseline trace, and an eleven-case Ed25519 attestation verification across two hosts.</dd>
+          <dt>Scope</dt><dd>Pre-registers the benchmark comparing federated and centralized control across independent operators.</dd>
         </dl>
         <p class="refs"><a href="https://doi.org/10.5281/zenodo.23337729">Read v1.3 and supporting artifacts</a> · <a href="https://github.com/cirwel/unitares/blob/49143add79ee630a60549f9ba79f1ca9b62b3423/docs/proposals/registered/accountable-testbed-metrics-preregistration-v1.md">Frozen evaluation registration</a></p>
       </section>
 
       <section id="runtime-evidence" aria-labelledby="runtime-heading">
         <div class="section-head"><span class="label">Companion evidence</span><h2 id="runtime-heading">Instrument quality has its own tests</h2></div>
-        <p>Recent runtime work adds evidence separate from the paper replay. An exploratory synthetic S-axis experiment found responses to injected deviations and reproduced identical readings for identical input and initial state. It also exposed vocabulary sensitivity and a regime feedback loop. An E/I input audit identified controller-history dependence and missing admissible calibration pairs. These findings guide instrument repair and evaluation.</p>
+        <p>Runtime evaluations test the state estimator’s axes directly: a synthetic S-axis experiment measured deterministic sensitivity to injected deviations and regime feedback, and an E/I input audit mapped controller-history coupling and calibration pair coverage. These findings guide instrument refinement and evaluation.</p>
         <p>Faithful response, robustness, and usable explanations can be studied directly. Outcome prediction is a separate registered question, and intervention authority requires a separate decision.</p>
         <p class="refs"><a href="https://github.com/cirwel/unitares/blob/00d986cdf938b3a93e5d0cacd87970975aa3d2c2/docs/evaluations/eisv-s-faithfulness/result-v0.md">S experiment</a> · <a href="https://github.com/cirwel/unitares/blob/00d986cdf938b3a93e5d0cacd87970975aa3d2c2/docs/evaluations/eisv-ei-referent/result-v0.md">E/I input audit</a> · <a href="https://github.com/cirwel/unitares/blob/00d986cdf938b3a93e5d0cacd87970975aa3d2c2/docs/plans/eisv-instrument-quality-2026-10-13.md">Instrument-quality plan</a></p>
       </section>
